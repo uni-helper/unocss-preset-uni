@@ -16,11 +16,11 @@ export function createVariants() {
         if (platform && platform.startsWith(matchPlatform)) {
           return {
             matcher: rest,
-            selector: s => s,
           }
         }
       }
     },
+    autocomplete: 'uni-$platform:',
   }
 
   return [platformVariants]

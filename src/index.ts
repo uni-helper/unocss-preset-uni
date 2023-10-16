@@ -23,8 +23,5 @@ export default definePreset((userOptions: UserUniPresetOptions = {}) => {
         return acc
       }, {} as any),
     },
-    autocomplete: {
-      templates: ['uni-$platform:'],
-    },
   }
 })
