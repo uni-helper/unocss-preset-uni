@@ -1,0 +1,70 @@
+{
+  "name": "@uni-helper/unocss-preset-uni",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@8.9.2",
+  "description": "",
+  "author": "KeJun",
+  "license": "MIT",
+  "homepage": "https://github.com/uni-helper/unocss-preset-uni#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uni-helper/unocss-preset-uni.git"
+  },
+  "bugs": "https://github.com/uni-helper/unocss-preset-uni/issues",
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "prepublishOnly": "pnpm build",
+    "release": "bumpp",
+    "start": "esno src/index.ts",
+    "test": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@uni-helper/uni-env": "^0.1.1",
+    "@unocss/core": "^0.56.5",
+    "unocss": "^0.56.5",
+    "unocss-applet": "^0.5.5"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "1.0.0-beta.27",
+    "@types/node": "^20.8.6",
+    "bumpp": "^9.2.0",
+    "eslint": "^8.51.0",
+    "esno": "^0.17.0",
+    "typescript": "^5.2.2",
+    "unbuild": "^2.0.0",
+    "vite": "^4.4.11",
+    "vitest": "^0.34.6"
+  }
+}

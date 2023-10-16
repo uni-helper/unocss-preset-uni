@@ -1,0 +1,19 @@
+{
+  "pages": [
+    {
+      "path": "pages/index",
+      "type": "page"
+    }
+  ],
+  "globalStyle": {
+    "backgroundColor": "@bgColor",
+    "backgroundColorBottom": "@bgColorBottom",
+    "backgroundColorTop": "@bgColorTop",
+    "backgroundTextStyle": "@bgTxtStyle",
+    "navigationBarBackgroundColor": "#000000",
+    "navigationBarTextStyle": "@navTxtStyle",
+    "navigationBarTitleText": "Vitess-Uni",
+    "navigationStyle": "custom"
+  },
+  "subPackages": []
+}
