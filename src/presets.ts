@@ -11,7 +11,7 @@ import type { ResolvedUniPresetOptions } from './types'
 
 export function createPresets(options: ResolvedUniPresetOptions) {
   const presets: Preset[] = [presetRemRpx({ mode: isMp ? undefined : 'rpx2rem' })]
-  const presetUno = isMp ? presetUnoRaw : presetApplet
+  const presetUno = isMp ? presetApplet : presetUnoRaw
   if (options.uno)
     presets.push(presetUno(options.uno))
 
