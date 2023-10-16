@@ -14,6 +14,12 @@ importers:
       '@unocss/core':
         specifier: ^0.56.5
         version: 0.56.5
+      '@unocss/preset-mini':
+        specifier: ^0.56.5
+        version: 0.56.5
+      '@unocss/rule-utils':
+        specifier: ^0.56.5
+        version: 0.56.5
       unocss:
         specifier: ^0.56.5
         version: 0.56.5(postcss@8.4.31)(rollup@3.29.4)(vite@4.4.11)
