@@ -1,26 +1,27 @@
-import type { VariantContext, VariantObject } from 'unocss'
-import { h } from '@unocss/preset-mini/utils'
-import { platform } from '@uni-helper/uni-env'
-import { variantGetParameter } from '@unocss/rule-utils'
+import type { VariantObject } from 'unocss'
+import { builtInPlatforms, platform } from '@uni-helper/uni-env'
 
 export function createVariants() {
+  let UniPlatformClassesAndElementsRE: RegExp
+
   const platformVariants: VariantObject = {
     name: 'platform',
-    match(matcher: string, ctx: Readonly<VariantContext<object>>) {
-      const variant = variantGetParameter('uni-', matcher, ctx.generator.config.separators)
-      if (variant) {
-        const [match, rest] = variant
-        let matchPlatform = h.bracket(match) ?? ''
-        if (matchPlatform === '')
-          matchPlatform = (ctx.theme as any).platform?.[match] ?? ''
-        if (platform && platform.startsWith(matchPlatform)) {
-          return {
-            matcher: rest,
-          }
+    match(input, ctx) {
+      if (!UniPlatformClassesAndElementsRE) {
+        if (!platform)
+          UniPlatformClassesAndElementsRE = new RegExp(`^(uni-(${builtInPlatforms.join('|')}))(${ctx.generator.config.separators.join('|')})`)
+        else
+          UniPlatformClassesAndElementsRE = new RegExp(`^(uni-(${platform}))(${ctx.generator.config.separators.join('|')})`)
+      }
+      const match = input.match(UniPlatformClassesAndElementsRE)
+      if (match) {
+        return {
+          matcher: input.slice(match[0].length),
         }
       }
     },
-    autocomplete: 'uni-$platform:',
+    multiPass: true,
+    autocomplete: `uni-(${builtInPlatforms.join('|')}):`,
   }
 
   return [platformVariants]

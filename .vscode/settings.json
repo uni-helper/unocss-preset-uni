@@ -60,5 +60,8 @@
     "json",
     "jsonc",
     "yaml"
+  ],
+  "unocss.root": [
+    "playground"
   ]
 }

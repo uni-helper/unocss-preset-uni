@@ -48,7 +48,8 @@
     "start": "esno src/index.ts",
     "test": "vitest",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "dev:mp-weixin": "npm -C playground run dev:mp-weixin"
   },
   "dependencies": {
     "@uni-helper/uni-env": "^0.1.1",
