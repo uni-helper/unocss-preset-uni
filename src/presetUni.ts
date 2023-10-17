@@ -1,16 +1,15 @@
 import { builtInPlatforms } from '@uni-helper/uni-env'
-import type { PresetFactory } from 'unocss'
-import { definePreset } from 'unocss'
-
+import type { Preset } from 'unocss'
+import type { Theme } from '@unocss/preset-mini'
 import { resolveOptions } from './options'
 import { createPresets } from './presets'
 import type { UserUniPresetOptions } from './types'
 import { createVariants } from './variants'
 
-const presetFactoryUni: PresetFactory = (userOptions: UserUniPresetOptions = {}) => {
+export function presetUni<T extends object = Theme>(userOptions: UserUniPresetOptions = {}): Preset<T> {
   const options = resolveOptions(userOptions)
-  const presets = createPresets(options)
-  const variants = createVariants()
+  const presets = createPresets<T>(options)
+  const variants = createVariants<T>()
 
   return {
     name: 'unocss-preset-uni',
@@ -24,8 +23,6 @@ const presetFactoryUni: PresetFactory = (userOptions: UserUniPresetOptions = {})
           acc[withoutPrefix] = platform
         return acc
       }, { mp: 'mp', app: 'app', quickapp: 'quickapp' } as any),
-    },
+    } as any,
   }
 }
-
-export const presetUni = definePreset(presetFactoryUni)

@@ -22,4 +22,10 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
   ],
+  theme: {
+    platforms: {
+      wechat: 'mp-weixin',
+      web: 'h5',
+    },
+  },
 })

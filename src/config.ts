@@ -12,7 +12,6 @@ export function defineConfig<T extends object = Theme>(config: UserConfig<T> & U
     attributify: config.attributify,
   }
   if (!config.presets)
-    // @ts-expect-error ignore
     config.presets = [presetUni(options)]
 
   const transformers = createTransformers(resolveOptions(options))
