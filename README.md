@@ -1,4 +1,4 @@
-# @uni-helper/unocss-uni
+# @uni-helper/unocss-preset-uni
 
 专为 uni-app 打造的 UnoCSS 预设
 
@@ -19,14 +19,14 @@
 安装
 
 ```shell
-pnpm add @uni-helper/unocss-uni
+pnpm add @uni-helper/unocss-preset-uni
 ```
 配置
 
 ```ts
 // uno.config.ts
 import { defineConfig } from 'unocss'
-import { presetUni } from '@uni-helper/unocss-uni'
+import { presetUni } from '@uni-helper/unocss-preset-uni'
 
 export default defineConfig({
   presets: [
@@ -110,11 +110,11 @@ platforms = {
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/@uni-helper/unocss-uni?style=flat&colorA=18181B&colorB=F0DB4F
-[npm-version-href]: https://npmjs.com/package/@uni-helper/unocss-uni
-[npm-downloads-src]: https://img.shields.io/npm/dm/@uni-helper/unocss-uni?style=flat&colorA=18181B&colorB=F0DB4F
-[npm-downloads-href]: https://npmjs.com/package/@uni-helper/unocss-uni
-[bundle-src]: https://img.shields.io/bundlephobia/minzip/@uni-helper/unocss-uni?style=flat&colorA=18181B&colorB=F0DB4F
-[bundle-href]: https://bundlephobia.com/result?p=@uni-helper/unocss-uni
-[license-src]: https://img.shields.io/github/license/uni-helper/unocss-uni.svg?style=flat&colorA=18181B&colorB=F0DB4F
-[license-href]: https://github.com/uni-helper/unocss-uni/blob/main/LICENSE
+[npm-version-src]: https://img.shields.io/npm/v/@uni-helper/unocss-preset-uni?style=flat&colorA=18181B&colorB=F0DB4F
+[npm-version-href]: https://npmjs.com/package/@uni-helper/unocss-preset-uni
+[npm-downloads-src]: https://img.shields.io/npm/dm/@uni-helper/unocss-preset-uni?style=flat&colorA=18181B&colorB=F0DB4F
+[npm-downloads-href]: https://npmjs.com/package/@uni-helper/unocss-preset-uni
+[bundle-src]: https://img.shields.io/bundlephobia/minzip/@uni-helper/unocss-preset-uni?style=flat&colorA=18181B&colorB=F0DB4F
+[bundle-href]: https://bundlephobia.com/result?p=@uni-helper/unocss-preset-uni
+[license-src]: https://img.shields.io/github/license/uni-helper/unocss-preset-uni.svg?style=flat&colorA=18181B&colorB=F0DB4F
+[license-href]: https://github.com/uni-helper/unocss-preset-uni/blob/main/LICENSE

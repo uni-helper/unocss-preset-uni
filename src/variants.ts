@@ -6,7 +6,7 @@ import type { Theme } from '@unocss/preset-mini'
 
 export function createVariants<T extends object = Theme>() {
   const platformVariants: VariantObject<T> = {
-    name: 'platforms',
+    name: 'unocss-preset-uni-platforms',
     match(matcher: string, ctx: Readonly<VariantContext<T>>) {
       const variant = variantGetParameter('uni-', matcher, ctx.generator.config.separators)
       if (variant) {
