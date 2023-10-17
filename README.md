@@ -30,7 +30,7 @@ import { defineConfig, presetUni } from '@uni-helper/unocss-uni'
 
 export default defineConfig({
   presets: [
-    presetUni,
+    presetUni(),
   ]
 })
 ```
