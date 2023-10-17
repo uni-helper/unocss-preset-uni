@@ -42,9 +42,9 @@ export default defineConfig({
 ```html
 <div class='uni-h5:mx-auto'></div>
 <div class='uni-app:mx-auto'></div>
-<div class='uni-app-android:mx-auto'></div>
 <div class='uni-mp:mx-auto'></div>
-<div class='uni-mp-weixin:mx-auto'></div>
+<div class='uni-weixin:mx-auto'></div>
+<div class='uni-mp-alipay:mx-auto'></div>
 ...
 ```
 
@@ -53,7 +53,7 @@ export default defineConfig({
 ```ts
 export default defineConfig({
   theme: {
-    platform: {
+    platforms: {
       'wechat': 'mp-weixin', // alias 到 mp-weixin
       'my-app': 'my-app', // 自定义平台
     }
@@ -64,6 +64,43 @@ export default defineConfig({
 <div class='uni-wechat:mx-auto'></div>
 <div class='uni-my-app:mx-auto'></div>
 ```
+
+<details>
+
+<summary>点击查看内置的平台匹配规则</summary>
+
+```js
+platforms = {
+  '360': 'mp-360',
+  'mp': 'mp',
+  'app': 'app',
+  'quickapp': 'quickapp',
+  'app-plus': 'app-plus',
+  'h5': 'h5',
+  'mp-360': 'mp-360',
+  'mp-alipay': 'mp-alipay',
+  'alipay': 'mp-alipay',
+  'mp-baidu': 'mp-baidu',
+  'baidu': 'mp-baidu',
+  'mp-jd': 'mp-jd',
+  'jd': 'mp-jd',
+  'mp-kuaishou': 'mp-kuaishou',
+  'kuaishou': 'mp-kuaishou',
+  'mp-lark': 'mp-lark',
+  'lark': 'mp-lark',
+  'mp-qq': 'mp-qq',
+  'qq': 'mp-qq',
+  'mp-toutiao': 'mp-toutiao',
+  'toutiao': 'mp-toutiao',
+  'mp-weixin': 'mp-weixin',
+  'weixin': 'mp-weixin',
+  'quickapp-webview': 'quickapp-webview',
+  'quickapp-webview-huawei': 'quickapp-webview-huawei',
+  'quickapp-webview-union': 'quickapp-webview-union'
+}
+```
+
+</details>
 
 ## 感谢
 

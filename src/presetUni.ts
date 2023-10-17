@@ -17,10 +17,13 @@ const presetFactoryUni: PresetFactory = (userOptions: UserUniPresetOptions = {})
     presets,
     variants,
     theme: {
-      platform: builtInPlatforms.reduce((acc, platform) => {
+      platforms: builtInPlatforms.reduce((acc, platform) => {
         acc[platform] = platform
+        const withoutPrefix = platform.replace(/^mp-/, '')
+        if (withoutPrefix && withoutPrefix !== platform)
+          acc[withoutPrefix] = platform
         return acc
-      }, {} as any),
+      }, { mp: 'mp', app: 'app', quickapp: 'quickapp' } as any),
     },
   }
 }
