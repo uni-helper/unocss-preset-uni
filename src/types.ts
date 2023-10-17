@@ -1,5 +1,5 @@
-import type { PresetAppletOptions } from 'unocss-applet/dist/preset-applet'
-import type { TransformerAttributifyOptions } from 'unocss-applet/dist/transformer-attributify'
+import type { PresetAppletOptions, TransformerAttributifyOptions } from 'unocss-applet'
+
 import type { presetAttributify } from 'unocss'
 
 export type PresetAttributifyOptions = Parameters<typeof presetAttributify>[number] & TransformerAttributifyOptions

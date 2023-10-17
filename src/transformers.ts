@@ -4,13 +4,12 @@ import {
 import type {
   SourceCodeTransformer,
 } from 'unocss'
-import { transformerApplet, transformerAttributify } from 'unocss-applet'
+import { transformerAttributify } from 'unocss-applet'
 import type { ResolvedUniPresetOptions } from './types'
 
 export function createTransformers(options: ResolvedUniPresetOptions) {
   const transformers: SourceCodeTransformer[] = []
   if (isMp) {
-    transformers.push(transformerApplet())
     if (options.attributify)
       transformers.push(transformerAttributify(options.attributify))
   }

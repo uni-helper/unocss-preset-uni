@@ -60,7 +60,7 @@
     "@unocss/preset-mini": "^0.56.5",
     "@unocss/rule-utils": "^0.56.5",
     "unocss": "^0.56.5",
-    "unocss-applet": "^0.5.5"
+    "unocss-applet": "^0.6.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "1.0.0-beta.27",
