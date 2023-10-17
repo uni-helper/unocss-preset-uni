@@ -6,13 +6,17 @@
   "description": "",
   "author": "KeJun",
   "license": "MIT",
-  "homepage": "https://github.com/uni-helper/unocss-preset-uni#readme",
+  "homepage": "https://github.com/uni-helper/unocss-uni#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uni-helper/unocss-preset-uni.git"
+    "url": "git+https://github.com/uni-helper/unocss-uni.git"
   },
-  "bugs": "https://github.com/uni-helper/unocss-preset-uni/issues",
-  "keywords": [],
+  "bugs": "https://github.com/uni-helper/unocss-uni/issues",
+  "keywords": [
+    "unocss",
+    "uni-app",
+    "unocss-preset"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
