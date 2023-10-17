@@ -25,8 +25,8 @@ pnpm add @uni-helper/unocss-uni
 
 ```ts
 // uno.config.ts
-// 使用这个库导出的 `defineConfig`
-import { defineConfig, presetUni } from '@uni-helper/unocss-uni'
+import { defineConfig } from 'unocss'
+import { presetUni } from '@uni-helper/unocss-uni'
 
 export default defineConfig({
   presets: [
@@ -48,7 +48,7 @@ export default defineConfig({
 ...
 ```
 
-你还可以使用 uno.config 的 theme 来自定义平台匹配规则:
+你还可以使用 `uno.config` 的 theme 来自定义平台匹配规则:
 
 ```ts
 export default defineConfig({

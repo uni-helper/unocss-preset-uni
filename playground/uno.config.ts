@@ -1,10 +1,11 @@
 import {
+  defineConfig,
   presetIcons,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
 
-import { defineConfig, presetUni } from '../src'
+import { presetUni } from '../src'
 
 export default defineConfig({
   presets: [
