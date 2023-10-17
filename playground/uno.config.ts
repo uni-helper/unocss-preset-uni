@@ -1,14 +1,14 @@
 import {
-  defineConfig,
   presetIcons,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
 
-import presetUni from '../src'
+import { defineConfig, presetUni } from '../src'
 
 export default defineConfig({
   presets: [
+    presetUni(),
     presetIcons({
       scale: 1.2,
       warn: true,
@@ -17,7 +17,6 @@ export default defineConfig({
         'vertical-align': 'middle',
       },
     }),
-    presetUni(),
   ],
   transformers: [
     transformerDirectives(),

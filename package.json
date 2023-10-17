@@ -1,5 +1,5 @@
 {
-  "name": "@uni-helper/unocss-preset-uni",
+  "name": "@uni-helper/unocss-uni",
   "type": "module",
   "version": "0.0.1",
   "packageManager": "pnpm@8.9.2",

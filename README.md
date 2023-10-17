@@ -1,4 +1,4 @@
-# @uni-helper/unocss-preset-uni
+# @uni-helper/unocss-uni
 
 专为 uni-app 打造的 UnoCSS 预设
 
@@ -9,7 +9,7 @@
 
 ## 特性
 
-- ⚡️ 零配置启动，就像 `presetUno` 一样！
+- ⚡️ 几乎零配置启动
 - 👍 内置 `Attributify` 支持！
 - ⚙️ 随时停用或自定义预设的配置
 - 🦾 按平台编写样式！
@@ -25,12 +25,11 @@ pnpm add @uni-helper/unocss-preset-uni
 
 ```ts
 // uno.config.ts
-import { defineConfig } from 'unocss'
-import presetUni from '@uni-helper/unocss-preset-uni'
+import { defineConfig, presetUni } from '@uni-helper/unocss-preset-uni'
 
 export default defineConfig({
   presets: [
-    presetUni()
+    presetUni,
   ]
 })
 ```

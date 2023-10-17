@@ -7,9 +7,10 @@ import type {
   Preset,
 } from 'unocss'
 import { presetApplet, presetRemRpx } from 'unocss-applet'
+import type { Theme } from '@unocss/preset-mini'
 import type { ResolvedUniPresetOptions } from './types'
 
-export function createPresets(options: ResolvedUniPresetOptions) {
+export function createPresets<T extends object = Theme>(options: ResolvedUniPresetOptions) {
   const presets: Preset[] = [presetRemRpx({ mode: isMp ? undefined : 'rpx2rem' })]
   const presetUno = isMp ? presetApplet : presetUnoRaw
   if (options.uno)
@@ -18,5 +19,5 @@ export function createPresets(options: ResolvedUniPresetOptions) {
   if (!isMp && options.attributify)
     presets.push(presetAttributify(options.attributify))
 
-  return presets
+  return presets as unknown as Preset<T>[]
 }
