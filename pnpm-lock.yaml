@@ -140,8 +140,8 @@ importers:
         specifier: ^0.2.2
         version: 0.2.2
       '@uni-helper/vite-plugin-uni-pages':
-        specifier: ^0.2.11
-        version: 0.2.11(@types/lodash-es@4.17.9)(lodash-es@4.17.21)(lodash@4.17.21)
+        specifier: ^0.2.12
+        version: 0.2.12(@types/lodash-es@4.17.9)(lodash-es@4.17.21)(lodash@4.17.21)
       '@uni-helper/vite-plugin-uni-platform':
         specifier: ^0.0.4
         version: 0.0.4
@@ -3830,8 +3830,8 @@ packages:
       - supports-color
     dev: true
 
-  /@uni-helper/vite-plugin-uni-pages@0.2.11(@types/lodash-es@4.17.9)(lodash-es@4.17.21)(lodash@4.17.21):
-    resolution: {integrity: sha512-oavlOeo1CVgqyN+UXhyzRQYE+hsxeUb95RYLwj4aoFFhwh+XVQmNLvoVTMQy/dGplN3+qwRh3QOKOP1zmQ+9PA==}
+  /@uni-helper/vite-plugin-uni-pages@0.2.12(@types/lodash-es@4.17.9)(lodash-es@4.17.21)(lodash@4.17.21):
+    resolution: {integrity: sha512-7Y5nX5o8BrUGWQyHYLSHbE5HxzXxkVpis988SDHAPOY+Kl6acpcg2hvfUNM99l1h4l1KwzW/JCr9u4Ib62HkjA==}
     dependencies:
       '@uni-helper/uni-env': 0.0.3
       '@vue/compiler-sfc': 3.3.4
