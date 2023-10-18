@@ -9,8 +9,9 @@
 
 ## 特性
 
-- ⚡️ 几乎零配置启动
-- 👍 内置 `Attributify` 支持！
+- 🥰 适配所有(app、mp、web)平台！
+- 🚀 几乎零配置启动！
+- ⚡️ 内置 `presetUno` 和 `presetAttributify` 支持！
 - ⚙️ 随时停用或自定义预设的配置
 - 🦾 按平台编写样式！
 
