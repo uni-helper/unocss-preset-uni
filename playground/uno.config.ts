@@ -8,6 +8,12 @@ import {
 import { presetUni } from '../src'
 
 export default defineConfig({
+  rules: [
+    [
+      /^intrinsic-h-(\d+)$/,
+      ([, d]) => ({ 'content-visibility': 'auto', 'contain-intrinsic-height': `auto ${Number(d) / 4}rem` }),
+    ],
+  ],
   presets: [
     presetUni(),
     presetIcons({

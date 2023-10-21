@@ -1,4 +1,4 @@
-lockfileVersion: '6.0'
+lockfileVersion: '6.1'
 
 settings:
   autoInstallPeers: true
@@ -24,8 +24,8 @@ importers:
         specifier: ^0.56.5
         version: 0.56.5(postcss@8.4.31)(rollup@3.29.4)(vite@4.4.11)
       unocss-applet:
-        specifier: ^0.6.1
-        version: 0.6.1
+        specifier: ^0.7.5
+        version: 0.7.5
     devDependencies:
       '@antfu/eslint-config':
         specifier: 1.0.0-beta.27
@@ -3856,24 +3856,24 @@ packages:
       '@uni-helper/uni-env': 0.0.3
     dev: true
 
-  /@unocss-applet/preset-applet@0.6.1:
-    resolution: {integrity: sha512-7/p5SfjY+iiqciy5beJAt6IehHJVXRTM9v5vtsf0qo3KzFoPYz7EzbCjZIPV7K2EK5MQZLQ8c91nwGI3jombGw==}
+  /@unocss-applet/preset-applet@0.7.5:
+    resolution: {integrity: sha512-o9xJmAAaDYNt1xWD7FfvY6pYrQmYUpdm7Roe1VV1Z6WUoOHZV3c8QTjAGdvcGMTyLJjAfRkIkbzPu8sZLs1pQg==}
     dependencies:
       '@unocss/core': 0.56.5
       '@unocss/preset-mini': 0.56.5
       '@unocss/preset-uno': 0.56.5
     dev: false
 
-  /@unocss-applet/preset-rem-rpx@0.6.1:
-    resolution: {integrity: sha512-bLPq2nignPqnm4EZvUJpxhESRNQjaRO+s6FWq0PkNbpBXISysDfm6q9M6CbIfa4utWeyE+EUBe0YoNCLRhXRsA==}
+  /@unocss-applet/preset-rem-rpx@0.7.5:
+    resolution: {integrity: sha512-82eCmIUrSFkMGoYTmJnPLToH63nKf4qmKcgOKAqQaJ2expe6j0c4hOdvvB3MME21lpe3Rdy5sDLXMBuVDNLHcA==}
     dev: false
 
   /@unocss-applet/transformer-applet@0.5.5:
     resolution: {integrity: sha512-GDzZt0S+Jbr7yiD+cmkIQdnEroAzSiCPajXaTWbmkk8dio+7dW9cWPEGaFKa3laJI6yxDR3jJX44m82LhHdEpg==}
     dev: false
 
-  /@unocss-applet/transformer-attributify@0.6.1:
-    resolution: {integrity: sha512-kI6cgba4ntvPXUxZMGUi8hFLPyDHpfigw34K5EljCVMRCXrCXFiFaHeGlnXXg4ix/KNbgtOBJk+7IyrgoMYUHQ==}
+  /@unocss-applet/transformer-attributify@0.7.5:
+    resolution: {integrity: sha512-HLjHlEm7VyPIFJu18U+JaD1Kbr5wkFo1d2BrWOImiSQxBg2uc/z3pt6fMCWfca6YIQDCThoAyGT5C9jR1MbzLQ==}
     dev: false
 
   /@unocss/astro@0.56.5(rollup@3.29.4)(vite@4.4.11):
@@ -9037,13 +9037,13 @@ packages:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
 
-  /unocss-applet@0.6.1:
-    resolution: {integrity: sha512-J3Aj7bfxHTuyJ/LzeJyi09fIMNyke0ZwsVaQSBXYQBMom/CQfB2SXlxmOiiJqWksaMFZa90xq0+paOuDHu9TKw==}
+  /unocss-applet@0.7.5:
+    resolution: {integrity: sha512-8p2DoC5B2V4mtERHVI8U+tniaMqpPZy3FwpFKfSijVJbY2FrCmSClPR75YXB//wzEfwePd7uhMwqik3q73PTww==}
     dependencies:
-      '@unocss-applet/preset-applet': 0.6.1
-      '@unocss-applet/preset-rem-rpx': 0.6.1
+      '@unocss-applet/preset-applet': 0.7.5
+      '@unocss-applet/preset-rem-rpx': 0.7.5
       '@unocss-applet/transformer-applet': 0.5.5
-      '@unocss-applet/transformer-attributify': 0.6.1
+      '@unocss-applet/transformer-attributify': 0.7.5
       '@unocss/preset-uno': 0.56.5
     dev: false
 

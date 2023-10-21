@@ -22,7 +22,7 @@ export function presetUni<T extends object = Theme>(userOptions: UserUniPresetOp
       if (!config.transformers)
         config.transformers = transformers
       else
-        config.transformers = [...transformers, ...config.transformers]
+        config.transformers = [...config.transformers, ...transformers]
     },
   }
 }
