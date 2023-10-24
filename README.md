@@ -14,6 +14,7 @@
 - ⚡️ 内置 `presetUno` 和 `presetAttributify` 支持！
 - ⚙️ 随时停用或自定义预设的配置
 - 🦾 按平台编写样式！
+- 👻 Windows 用户？告别烦人的崩溃！[#3603](https://github.com/dcloudio/uni-app/issues/3603)
 
 ## 使用
 
@@ -37,6 +38,8 @@ export default defineConfig({
 ```
 
 ## 示例
+
+用法与 `presetUno` 一致，请参考 [`presetUno`](https://unocss.dev/presets/uno) 的文档。
 
 ### 按平台编写
 
