@@ -1,3 +1,3 @@
-import antfu from '@antfu/eslint-config'
+import uni from '@uni-helper/eslint-config'
 
-export default antfu()
+export default uni()

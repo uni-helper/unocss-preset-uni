@@ -2,7 +2,7 @@
   "name": "@uni-helper/unocss-preset-uni",
   "type": "module",
   "version": "0.2.3",
-  "packageManager": "pnpm@8.9.2",
+  "packageManager": "pnpm@8.10.2",
   "description": "",
   "author": "KeJun",
   "license": "MIT",
@@ -69,8 +69,8 @@
     "unocss-applet": "^0.7.7"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "1.0.0-beta.28",
-    "@types/node": "^20.8.8",
+    "@types/node": "^20.8.10",
+    "@uni-helper/eslint-config": "^0.0.1",
     "bumpp": "^9.2.0",
     "eslint": "^8.52.0",
     "esno": "^0.17.0",
