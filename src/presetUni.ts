@@ -1,4 +1,5 @@
-import type { Preset } from 'unocss'
+import type { Preset } from '@unocss/core'
+import { definePreset } from '@unocss/core'
 import type { Theme } from '@unocss/preset-mini'
 import { resolveOptions } from './options'
 import { createPresets } from './presets'
@@ -7,10 +8,14 @@ import { createVariants } from './variants'
 import { createTransformers } from './transformers'
 import { theme } from './theme'
 
-export function presetUni<T extends object = Theme>(userOptions: UserUniPresetOptions = {}): Preset<T> {
+export type { Theme } from '@unocss/preset-mini'
+
+export { theme, createVariants, createTransformers, createPresets, resolveOptions }
+
+export const presetUni = definePreset((userOptions: UserUniPresetOptions = {}) => {
   const options = resolveOptions(userOptions)
-  const presets = createPresets<T>(options)
-  const variants = createVariants<T>()
+  const presets = createPresets(options)
+  const variants = createVariants()
   const transformers = createTransformers((options))
 
   return {
@@ -24,5 +29,5 @@ export function presetUni<T extends object = Theme>(userOptions: UserUniPresetOp
       else
         config.transformers = [...config.transformers, ...transformers]
     },
-  }
-}
+  } as Preset<object>
+})
