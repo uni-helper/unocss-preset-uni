@@ -1,6 +1,13 @@
 import { builtInPlatforms } from '@uni-helper/uni-env'
+import type { Theme } from '@unocss/preset-mini'
 
-export const theme = {
+declare module '@unocss/preset-mini' {
+  interface Theme {
+    platforms: Record<string, string>
+  }
+}
+
+export const theme: Theme = {
   platforms: builtInPlatforms.reduce((acc, platform) => {
     acc[platform] = platform
     const withoutPrefix = platform.replace(/^mp-/, '')
@@ -8,4 +15,4 @@ export const theme = {
       acc[withoutPrefix] = platform
     return acc
   }, { mp: 'mp', app: 'app', quickapp: 'quickapp' } as any),
-} as any
+} as const
