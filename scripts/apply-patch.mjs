@@ -21,6 +21,8 @@ function replaceUnoCSSResolveId(file) {
   code = code.replace(/const RESOLVED_ID_WITH_QUERY_RE = .*?;/, 'const RESOLVED_ID_WITH_QUERY_RE = /__uno(?:(_.*?))?\\.css(\\?.*)?$/;')
   code = code.replace(/const RESOLVED_ID_RE = .*?;/, 'const RESOLVED_ID_RE = /__uno(?:(_.*?))?\\.css$/;')
   code = code.replace(/(["`])\/(__uno_?)/gm, '$1$2')
+  code = code.replace(/(acceptedPath: )(mod.url)/, `$1\`/@id/\${$2}\``)
+  code = code.replace(/(path: )(mod.url)/, `$1\`/@id/\${$2}\``)
   writeFileSync(indexPath, code)
 }
 
