@@ -6,7 +6,7 @@ function parseOption<T>(value: T | boolean | undefined, defaultValue?: T) {
     return value
 
   if (value === true)
-    return defaultValue ?? {}
+    return defaultValue ?? {} as T
 
   if (value)
     return { ...defaultValue, ...value }
