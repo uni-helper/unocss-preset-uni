@@ -9,10 +9,8 @@ import type { ResolvedUniPresetOptions } from './types'
 
 export function createTransformers(options: ResolvedUniPresetOptions) {
   const transformers: SourceCodeTransformer[] = []
-  if (isMp) {
-    if (options.attributify)
-      transformers.push(transformerAttributify(options.attributify))
-  }
+  if (isMp && options.attributify)
+    transformers.push(transformerAttributify(options.attributify))
 
   return transformers
 }

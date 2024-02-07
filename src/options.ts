@@ -22,7 +22,7 @@ export function resolveOptions(userOptions: Partial<UniPresetOptions> = {}): Res
   const uno = parseOption(userOptions.uno, { dark })
   const attributify = parseOption(
     userOptions.attributify,
-    { ignoreAttributes: isH5 ? undefined : ['block', 'fixed'] },
+    { ignoreAttributes: isMp ? ['block', 'fixed'] : undefined },
   )
   const remRpx = parseOption(
     userOptions.remRpx,
