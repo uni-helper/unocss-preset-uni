@@ -13,7 +13,7 @@ export function createPresets(options: ResolvedUniPresetOptions) {
   if (options.remRpx)
     presets.push(presetRemRpx(options.remRpx))
 
-  if (!isMp && options.attributify)
+  if (options.attributify)
     presets.push(presetAttributify(options.attributify))
 
   return presets
