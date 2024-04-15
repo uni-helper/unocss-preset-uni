@@ -2,7 +2,7 @@
   "name": "@uni-helper/unocss-preset-uni",
   "type": "module",
   "version": "0.2.7",
-  "packageManager": "pnpm@8.15.1",
+  "packageManager": "pnpm@8.15.7",
   "description": "",
   "author": "KeJun",
   "license": "MIT",
@@ -60,24 +60,38 @@
     "build:h5": "npm -C playground run build:h5",
     "postinstall": "node scripts/apply-patch.mjs"
   },
+  "peerDependencies": {
+    "@unocss/preset-mini": ">=0.58",
+    "@unocss/rule-utils": ">=0.58",
+    "@unocss/vite": ">=0.58",
+    "unocss": ">=0.58",
+    "unocss-applet": ">=0.7"
+  },
+  "peerDependenciesMeta": {
+    "@unocss/preset-mini": {
+      "optional": true
+    },
+    "@unocss/vite": {
+      "optional": true
+    }
+  },
   "dependencies": {
-    "@uni-helper/uni-env": "^0.1.1",
-    "@unocss/core": "^0.58.5",
-    "@unocss/preset-mini": "^0.58.5",
-    "@unocss/rule-utils": "^0.58.5",
-    "@unocss/vite": "^0.58.5",
-    "unocss": "^0.58.5",
-    "unocss-applet": "^0.7.8"
+    "@uni-helper/uni-env": "^0.1.1"
   },
   "devDependencies": {
-    "@types/node": "^20.11.17",
+    "@types/node": "^20.12.7",
     "@uni-helper/eslint-config": "^0.0.6",
-    "bumpp": "^9.3.0",
-    "eslint": "^8.56.0",
-    "esno": "^4.0.0",
-    "typescript": "^5.3.3",
+    "@unocss/preset-mini": "^0.59.2",
+    "@unocss/rule-utils": "^0.59.2",
+    "@unocss/vite": "^0.59.2",
+    "bumpp": "^9.4.0",
+    "eslint": "^8.57.0",
+    "esno": "^4.7.0",
+    "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
-    "vite": "^5.1.0",
-    "vitest": "^1.2.2"
+    "unocss": "^0.59.2",
+    "unocss-applet": "^0.8.0",
+    "vite": "^5.2.8",
+    "vitest": "^1.5.0"
   }
 }
