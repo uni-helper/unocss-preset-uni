@@ -11,7 +11,7 @@ export function createVariants() {
       if (variant) {
         const [match, rest] = variant
         let matchPlatform = h.bracket(match) ?? ''
-        const { platforms = {} } = (ctx.theme as any)
+        const { platforms = {} } = ctx.theme as any
         matchPlatform = matchPlatform === '' ? platforms[match] ?? '' : matchPlatform
         if (matchPlatform && (platform === undefined || platform.startsWith(matchPlatform))) {
           return {

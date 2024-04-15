@@ -1,5 +1,5 @@
-import type { Preset } from '@unocss/core'
-import { definePreset } from '@unocss/core'
+import type { Preset } from 'unocss'
+import { definePreset } from 'unocss'
 import { resolveOptions } from './options'
 import { createPresets } from './presets'
 import { theme } from './theme'
