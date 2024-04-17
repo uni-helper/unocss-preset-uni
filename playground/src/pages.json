@@ -2,7 +2,7 @@
   "pages": [
     {
       "path": "pages/index",
-      "type": "page"
+      "type": "home"
     }
   ],
   "globalStyle": {
@@ -12,7 +12,7 @@
     "backgroundTextStyle": "@bgTxtStyle",
     "navigationBarBackgroundColor": "#000000",
     "navigationBarTextStyle": "@navTxtStyle",
-    "navigationBarTitleText": "Vitesse-Uni",
+    "navigationBarTitleText": "Uni Creator",
     "navigationStyle": "custom"
   },
   "subPackages": []

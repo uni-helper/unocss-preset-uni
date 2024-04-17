@@ -5,15 +5,9 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
-import { presetUni } from '../src'
+import { presetUni } from '@uni-helper/unocss-preset-uni'
 
 export default defineConfig({
-  rules: [
-    [
-      /^intrinsic-h-(\d+)$/,
-      ([, d]) => ({ 'content-visibility': 'auto', 'contain-intrinsic-height': `auto ${Number(d) / 4}rem` }),
-    ],
-  ],
   presets: [
     presetUni(),
     presetIcons({
@@ -29,10 +23,4 @@ export default defineConfig({
     transformerDirectives(),
     transformerVariantGroup(),
   ],
-  theme: {
-    platforms: {
-      wechat: 'mp-weixin',
-      web: 'h5',
-    },
-  },
 })

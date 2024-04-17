@@ -1,7 +1,13 @@
+<script setup lang="ts">
+import AppLogos from '@/components/AppLogos.vue'
+import InputEntry from '@/components/InputEntry.vue'
+import AppFooter from '@/components/AppFooter.vue'
+</script>
+
 <template>
-  <div container mx-auto py-10>
-    <view class="cursor-pointer border-1 inline-block p-2 rounded uni-wechat:mx-auto uni-mp:mx-auto" bg="blue hover:yellow">
-      Hello UniApp
-    </view>
-  </div>
+  <view px-10 py-20 text-center>
+    <AppLogos />
+    <InputEntry />
+    <AppFooter />
+  </view>
 </template>
