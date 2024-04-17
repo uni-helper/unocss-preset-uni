@@ -20,19 +20,44 @@
 
 > unocss 从 v0.59 开始只提供 ESM 支持，相关信息请参考 [Pure ESM package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)。
 
-安装
+### 安装
 
 ```shell
-pnpm add @uni-helper/unocss-preset-uni
+pnpm add @uni-helper/unocss-preset-uni -D
 
 # unocss v0.59 或以上
-pnpm add unocss @unocss-applet -D
+pnpm add unocss -D
 
 # unocss v0.58
-pnpm add unocss@0.58.9 @unocss-applet@0.7.8 -D
+pnpm add unocss@0.58.9 -D
 ```
 
-配置
+### 引入
+
+<details>
+
+<summary>点击查看ESM引入示例</summary>
+
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite'
+import uni from '@dcloudio/vite-plugin-uni'
+
+export default async () => {
+  const UnoCSS = (await import('unocss/vite')).default
+
+  return defineConfig({
+    plugins: [
+      uni(),
+      UnoCSS(),
+    ],
+  })
+}
+```
+
+</details>
+
+### 配置
 
 ```ts
 // uno.config.ts
