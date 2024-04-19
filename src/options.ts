@@ -19,7 +19,7 @@ function parseOption<T>(value: T | boolean | undefined, defaultValue?: T) {
 
 export function resolveOptions(userOptions: Partial<UniPresetOptions> = {}): ResolvedUniPresetOptions {
   const uno = parseOption(userOptions.uno, {})
-  const attributify = parseOption(
+  const attributify = userOptions.attributify !== false && parseOption(
     userOptions.attributify,
     { ignoreAttributes: isMp ? ['block', 'fixed'] : undefined },
   )
