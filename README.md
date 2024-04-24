@@ -26,10 +26,10 @@
 pnpm add @uni-helper/unocss-preset-uni
 
 # unocss v0.59 或以上
-pnpm add unocss @unocss-applet -D
+pnpm add unocss unocss-applet -D
 
 # unocss v0.58
-pnpm add unocss@0.58.9 @unocss-applet@0.7.8 -D
+pnpm add unocss@0.58.9 unocss-applet@0.7.8 -D
 ```
 
 配置
