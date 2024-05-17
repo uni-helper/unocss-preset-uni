@@ -13,9 +13,11 @@ export function createVariants() {
         let matchPlatform = h.bracket(match) ?? ''
         const { platforms = {} } = ctx.theme as any
         matchPlatform = matchPlatform === '' ? platforms[match] ?? '' : matchPlatform
-        if (matchPlatform && (platform === undefined || platform.startsWith(matchPlatform))) {
+        
+        if (matchPlatform) {
           return {
             matcher: rest,
+            selector: s => platform !== undefined && platform.startsWith(matchPlatform) ? s : `${s}-pass`,
           }
         }
       }
