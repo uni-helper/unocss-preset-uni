@@ -5,7 +5,7 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 
-import { presetUni } from '../src'
+import { presetUni } from '@uni-helper/unocss-preset-uni'
 
 export default defineConfig({
   rules: [
