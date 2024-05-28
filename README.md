@@ -9,7 +9,7 @@
 
 ## 特性
 
-- 🥰 适配所有(app、mp、web)平台！
+- 🥰 适配 uni-app 所有支持平台！
 - 🚀 几乎零配置启动！
 - ⚡️ 内置 `presetUno` 和 `presetAttributify` 支持！
 - ⚙️ 随时停用或自定义预设的配置
@@ -35,7 +35,24 @@ pnpm add unocss@0.58.9 unocss-applet@0.7.8 -D
 ### 配置
 
 ```ts
-// vite.config.mts
+// vite.config.ts，支持 HBuilderX
+import { defineConfig } from 'vite'
+import Uni from '@dcloudio/vite-plugin-uni'
+
+export default async () => {
+  const UnoCSS = (await import('unocss/vite')).default
+
+  return defineConfig({
+    plugins: [
+      Uni(),
+      UnoCSS()
+    ]
+  })
+}
+```
+
+```ts
+// vite.config.mts，不支持 HBuilderX
 import { defineConfig } from 'vite'
 import uniModule from '@dcloudio/vite-plugin-uni'
 import UnoCSS from 'unocss/vite'
@@ -52,7 +69,7 @@ export default defineConfig({
 ```
 
 ```ts
-// uno.config.ts
+// uno.config.ts，支持 HBuilderX
 import { defineConfig } from 'unocss'
 import { presetUni } from '@uni-helper/unocss-preset-uni'
 
@@ -65,40 +82,59 @@ export default defineConfig({
 
 ## 示例
 
-用法与 `presetUno` 一致，请参考 [`presetUno`](https://unocss.dev/presets/uno) 的文档。
+用法与 UnoCSS 官方提供的 `presetUno` 一致，请参考 [文档](https://unocss.dev/presets/uno)。
 
 ### 按平台编写
 
+开箱即用的平台支持，允许你按平台编写相应样式。
+
 ```html
+<!-- 只在 H5 编译出 mx-auto 类 -->
 <div class='uni-h5:mx-auto'></div>
+
+<!-- 只在 APP 编译出 mx-auto 类 -->
 <div class='uni-app:mx-auto'></div>
+
+<!-- 只在小程序编译出 mx-auto 类 -->
 <div class='uni-mp:mx-auto'></div>
+
+<!-- 只在微信小程序编译出 mx-auto 类，类名也可以写成 uni-mp-weixin:mx-auto -->
 <div class='uni-weixin:mx-auto'></div>
+
+<!-- 只在支付宝小程序编译出 mx-auto 类，类名也可以写成 uni-alipay:mx-auto -->
 <div class='uni-mp-alipay:mx-auto'></div>
 ...
 ```
 
-你还可以使用 `uno.config` 的 theme 来自定义平台匹配规则:
+你也可以通过自定义 `theme.platforms` 来自定义平台匹配规则:
 
 ```ts
+// uno.config.ts
+import { defineConfig } from 'unocss'
+import { presetUni } from '@uni-helper/unocss-preset-uni'
+
 export default defineConfig({
+  presets: [
+    presetUni()
+  ],
   theme: {
     platforms: {
-      'wechat': 'mp-weixin', // alias 到 mp-weixin
-      'my-app': 'my-app', // 自定义平台
+      'wechat': 'mp-weixin', // 支持 uni-wechat，等同于 uni-mp-weixin
+      'my-app': 'my-app', // 自定义平台，支持 uni-my-app
     }
   }
 })
 ```
 
 ```html
+<!-- 注意：你不能省略 uni- 的类名前缀 -->
 <div class='uni-wechat:mx-auto'></div>
 <div class='uni-my-app:mx-auto'></div>
 ```
 
 <details>
 
-<summary>点击查看内置的平台匹配规则</summary>
+<summary>点击展开查看内置的平台匹配规则</summary>
 
 ```js
 platforms = {
