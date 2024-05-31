@@ -13,7 +13,7 @@ export function createVariants() {
         let matchPlatform = h.bracket(match) ?? ''
         const { platforms = {} } = ctx.theme as any
         matchPlatform = matchPlatform === '' ? platforms[match] ?? '' : matchPlatform
-        
+
         if (matchPlatform) {
           return {
             matcher: rest,
