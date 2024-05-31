@@ -2,7 +2,7 @@
   "name": "@uni-helper/unocss-preset-uni",
   "type": "module",
   "version": "0.2.8",
-  "packageManager": "pnpm@9.1.1",
+  "packageManager": "pnpm@9.1.4",
   "description": "",
   "author": "KeJun",
   "license": "MIT",
@@ -33,14 +33,6 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./dist/index.d.ts"
-      ]
-    }
-  },
   "files": [
     "dist",
     "scripts"
@@ -76,22 +68,22 @@
     }
   },
   "dependencies": {
-    "@uni-helper/uni-env": "^0.1.1"
+    "@uni-helper/uni-env": "^0.1.2"
   },
   "devDependencies": {
-    "@types/node": "^20.12.12",
+    "@types/node": "^20.12.13",
     "@uni-helper/eslint-config": "^0.0.6",
-    "@unocss/preset-mini": "^0.60.2",
-    "@unocss/rule-utils": "^0.60.2",
-    "@unocss/vite": "^0.60.2",
+    "@unocss/preset-mini": "^0.60.3",
+    "@unocss/rule-utils": "^0.60.3",
+    "@unocss/vite": "^0.60.3",
     "bumpp": "^9.4.1",
     "eslint": "^8.57.0",
     "esno": "^4.7.0",
     "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
-    "unocss": "^0.60.2",
-    "unocss-applet": "^0.8.1",
-    "vite": "^5.2.11",
+    "unocss": "^0.60.3",
+    "unocss-applet": "^0.8.2",
+    "vite": "^5.2.12",
     "vitest": "^1.6.0"
   }
 }

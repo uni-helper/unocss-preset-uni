@@ -67,7 +67,7 @@
     "@iconify-json/carbon": "1.1.33",
     "@types/node": "20.12.12",
     "@uni-helper/uni-app-types": "0.5.13",
-    "@uni-helper/uni-env": "0.1.1",
+    "@uni-helper/uni-env": "0.1.2",
     "@uni-helper/unocss-preset-uni": "workspace:*",
     "@vue/tsconfig": "0.5.1",
     "typescript": "5.4.5",
