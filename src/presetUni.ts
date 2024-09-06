@@ -1,4 +1,4 @@
-import type { Preset } from 'unocss'
+import type { PresetFactory } from 'unocss'
 import { definePreset } from 'unocss'
 import { resolveOptions } from './options'
 import { createPresets } from './presets'
@@ -11,7 +11,7 @@ export type { Theme } from '@unocss/preset-mini'
 
 export { createPresets, createTransformers, createVariants, resolveOptions, theme }
 
-export const presetUni = definePreset((userOptions: UserUniPresetOptions = {}) => {
+export const presetUni: PresetFactory<object, UserUniPresetOptions> = definePreset((userOptions = {}) => {
   const options = resolveOptions(userOptions)
   const presets = createPresets(options)
   const variants = createVariants()
@@ -28,5 +28,5 @@ export const presetUni = definePreset((userOptions: UserUniPresetOptions = {}) =
       else
         config.transformers = [...config.transformers, ...transformers]
     },
-  } as Preset<object>
+  }
 })
