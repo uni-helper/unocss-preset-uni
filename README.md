@@ -80,9 +80,61 @@ export default defineConfig({
 })
 ```
 
+完整配置示例可参考 [uni-helper/vitesse-uni-app](https://github.com/uni-helper/vitesse-uni-app)。
+
+### 选项
+
+#### uno
+
+- 默认值：`true`
+
+是否启用 [@unocss/preset-uno](https://unocss.dev/presets/uno)。对于小程序平台，使用基于 @unocss/preset-uno 分叉而来的 [@unocss-applet/preset-applet](https://github.com/unocss-applet/unocss-applet) 以获取更佳支持。
+
+默认启用。要禁用，请传递 `false`。
+
+除了传递 boolean 值，你也可以传递 @unocss/preset-uno 以及 @unocss-applet/preset-applet 的选项，具体选项请查看上方提供的文档链接，此时仍视为开启。
+
+#### remRpx
+
+- 默认值：`true`
+
+是否启用 [@unocss-applet/preset-rem-rpx](https://github.com/unocss-applet/unocss-applet/tree/main/packages/preset-rem-rpx)。
+
+默认启用，将 rpx 转换成 rem（即 `mode: "rpx2rem"`）。要禁用，请传递 `false`。
+
+除了传递 boolean 值，你也可以传递 @unocss-applet/preset-rem-rpx 的选项，具体选项请查看上方提供的文档链接，此时仍视为开启。
+
+#### attributify
+
+- 默认值：`true`
+
+是否启用 [@unocss/preset-attributify](https://unocss.dev/presets/attributify)。对于小程序平台，还会自动启用 [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) 以获取更佳支持。
+
+默认启用，匹配属性，忽略 `block` 和 `fixed`。要禁用，请传递 `false`。
+
+除了传递 boolean 值，你也可以传递 @unocss/preset-attributify 的选项，具体选项请查看上方提供的文档链接，此时仍视为开启。
+
+注意：部分情况下组件库的属性命名可能会与此模式冲突，如果出现样式无效的情况，请尝试关闭此选项，或者设置 `prefixedOnly` 选项值为 `true`，只扫描前缀匹配的属性。
+
+```ts
+import { defineConfig } from 'unocss'
+import { isMp } from '@uni-helper/uni-env'
+import { presetUni } from '@uni-helper/unocss-preset-uni'
+
+export default defineConfig({
+  presets: [
+    presetUni({
+      attributify: {
+        prefixedOnly: true,
+      }
+    })
+  ]
+})
+```
+
 ## 示例
 
-用法与 UnoCSS 官方提供的 `presetUno` 一致，请参考 [文档](https://unocss.dev/presets/uno)。
+默认地，用法与 [@unocss/preset-uno](https://unocss.dev/presets/uno) 一致，额外支持以下功能。
 
 ### 按平台编写
 
