@@ -1,7 +1,7 @@
 {
   "name": "@uni-helper/unocss-preset-uni",
   "type": "module",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "packageManager": "pnpm@9.12.1",
   "description": "",
   "author": "KeJun",
