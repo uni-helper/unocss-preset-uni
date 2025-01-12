@@ -1,8 +1,25 @@
 import type { VariantContext, VariantObject } from 'unocss'
-import { h } from '@unocss/preset-mini/utils'
 import { platform } from '@uni-helper/uni-env'
+import { h } from '@unocss/preset-mini/utils'
 import { variantGetParameter } from '@unocss/rule-utils'
 
+/**
+ * Creates platform-specific variants for Unocss styling in uni-app environments.
+ *
+ * @remarks
+ * Generates a variant object that enables platform-specific style application
+ * by conditionally applying styles based on the current platform.
+ *
+ * @returns An array containing a platform variant configuration object
+ *
+ * @example
+ * // In a Unocss preset configuration
+ * variants: [
+ *   ...createVariants()
+ * ]
+ *
+ * @beta
+ */
 export function createVariants() {
   const platformVariants: VariantObject = {
     name: 'unocss-preset-uni-platforms',
