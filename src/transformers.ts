@@ -1,11 +1,11 @@
-import { isMp } from '@uni-helper/uni-env'
-import {
-} from 'unocss'
 import type {
   SourceCodeTransformer,
 } from 'unocss'
-import { transformerAttributify } from 'unocss-applet'
 import type { ResolvedUniPresetOptions } from './types'
+import { isMp } from '@uni-helper/uni-env'
+import {
+} from 'unocss'
+import { transformerAttributify } from 'unocss-applet'
 
 export function createTransformers(options: ResolvedUniPresetOptions) {
   const transformers: SourceCodeTransformer[] = []

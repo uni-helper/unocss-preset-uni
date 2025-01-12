@@ -1,6 +1,6 @@
 import type { VariantContext, VariantObject } from 'unocss'
-import { h } from '@unocss/preset-mini/utils'
 import { platform } from '@uni-helper/uni-env'
+import { h } from '@unocss/preset-mini/utils'
 import { variantGetParameter } from '@unocss/rule-utils'
 
 export function createVariants() {

@@ -1,5 +1,5 @@
-import { isMp } from '@uni-helper/uni-env'
 import type { ResolvedUniPresetOptions, UniPresetOptions } from './types'
+import { isMp } from '@uni-helper/uni-env'
 
 function parseOption<T>(value: T | boolean | undefined, defaultValue?: T) {
   if (value === false)

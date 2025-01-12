@@ -5,6 +5,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "types": ["@types/node"],
     "strict": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
