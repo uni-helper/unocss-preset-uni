@@ -53,6 +53,7 @@
     "postinstall": "node scripts/apply-patch.mjs"
   },
   "peerDependencies": {
+    "@unocss/preset-legacy-compat": ">=0.58",
     "@unocss/preset-mini": ">=0.58",
     "@unocss/rule-utils": ">=0.58",
     "@unocss/vite": ">=0.58",
@@ -68,22 +69,23 @@
     }
   },
   "dependencies": {
-    "@uni-helper/uni-env": "^0.1.4"
+    "@uni-helper/uni-env": "^0.1.7"
   },
   "devDependencies": {
-    "@types/node": "^20.16.11",
-    "@uni-helper/eslint-config": "^0.2.0",
-    "@unocss/preset-mini": "^0.65.3",
-    "@unocss/rule-utils": "^0.65.3",
-    "@unocss/vite": "^0.65.3",
-    "bumpp": "^9.6.1",
-    "eslint": "^9.12.0",
+    "@types/node": "^20.17.12",
+    "@uni-helper/eslint-config": "^0.2.2",
+    "@unocss/preset-legacy-compat": "^0.65.4",
+    "@unocss/preset-mini": "^0.65.4",
+    "@unocss/rule-utils": "^0.65.4",
+    "@unocss/vite": "^0.65.4",
+    "bumpp": "^9.10.0",
+    "eslint": "^9.18.0",
     "esno": "^4.8.0",
-    "typescript": "^5.6.2",
+    "typescript": "^5.7.3",
     "unbuild": "^2.0.0",
-    "unocss": "^0.65.3",
-    "unocss-applet": "^0.8.5",
-    "vite": "^5.4.8",
-    "vitest": "^2.1.2"
+    "unocss": "^0.65.4",
+    "unocss-applet": "^0.9.0",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
   }
 }

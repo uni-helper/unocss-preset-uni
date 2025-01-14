@@ -1,5 +1,5 @@
-import { builtInPlatforms } from '@uni-helper/uni-env'
 import type { Theme } from '@unocss/preset-mini'
+import { builtInPlatforms } from '@uni-helper/uni-env'
 
 declare module '@unocss/preset-mini' {
   interface Theme {

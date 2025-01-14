@@ -1,10 +1,10 @@
 import type { PresetFactory } from 'unocss'
+import type { UserUniPresetOptions } from './types'
 import { definePreset } from 'unocss'
 import { resolveOptions } from './options'
 import { createPresets } from './presets'
 import { theme } from './theme'
 import { createTransformers } from './transformers'
-import type { UserUniPresetOptions } from './types'
 import { createVariants } from './variants'
 
 export type { Theme } from '@unocss/preset-mini'
