@@ -3,35 +3,40 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   release:
+    permissions:
+      id-token: write
+      contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Set node
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: pnpm
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: https://registry.npmjs.org
 
-      - run: npx changelogithub
-        continue-on-error: true
+      - name: Setup corepack
+        run: npm install -f -g npm@latest corepack@latest && corepack enable
+
+      - name: GitHub Release
+        run: pnpx changelogithub
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Install Dependencies
-        run: pnpm i
+        run: pnpm install
 
       - name: Publish to NPM
         run: pnpm publish --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
