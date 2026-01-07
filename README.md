@@ -134,7 +134,27 @@ export default defineConfig({
 
 ## 示例
 
+
 默认地，用法与 [@unocss/preset-uno](https://unocss.dev/presets/uno) 一致，额外支持以下功能。
+
+### 启用 Wind4
+
+```ts
+// uno.config.ts
+import { defineConfig } from 'unocss'
+import { presetUni } from '@uni-helper/unocss-preset-uni'
+
+export default defineConfig({
+  presets: [
+    presetUni({
+      uno: {
+        preset: 'wind4',
+      },
+    })
+  ],
+})
+```
+
 
 ### 按平台编写
 
