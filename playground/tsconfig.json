@@ -1,19 +1,11 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "compilerOptions": {
-    "ignoreDeprecations": "5.0",
     "lib": ["esnext", "dom"],
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["@dcloudio/types", "@uni-helper/uni-app-types"],
-    "sourceMap": true
+    "types": ["@dcloudio/types", "@uni-helper/uni-app-types"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "vueCompilerOptions": {
-    "experimentalRuntimeMode": "runtime-uni-app",
-    "nativeTags": ["block", "component", "template", "slot"],
-    "plugins": ["@uni-helper/uni-app-types/volar-plugin"]
-  }
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
 }
