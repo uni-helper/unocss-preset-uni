@@ -137,9 +137,13 @@ describe('createVariants', () => {
     expect(match!('uni-unknown:mx-auto', ctx)).toBeUndefined()
   })
 
-  it('returns undefined for every uni-xxx: when platform is unset (outside a uni build)', () => {
+  // 编辑器场景：VSCode 语言服务不走 uni-app 构建，platform 未定义。
+  // 此时应剥离平台前缀、保留工具类，使编辑器能产出 CSS 并提供悬浮提示；
+  // 真实生效与否仍由构建时的平台过滤决定。
+  it('strips the prefix and keeps the utility when platform is unset (editor scene)', () => {
     const match = createVariants({ isMp: false, platform: undefined })[0].match
-    expect(match!('uni-weixin:mx-auto', ctx)).toBeUndefined()
+    const r = match!('uni-weixin:mx-auto', ctx)!
+    expect(r.matcher).toBe('mx-auto')
   })
 
   it('supports bracket syntax for explicit platform names', () => {

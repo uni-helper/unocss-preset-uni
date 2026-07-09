@@ -65,3 +65,34 @@ describe('createVariants · 实际 CSS 产出', () => {
     expect(defaultLayer(await generate(h5, 'uni-weixin:hover:mx-auto'))).toBe('')
   })
 })
+
+// 编辑器场景：VSCode 语言服务直接加载 uno.config.ts，不走 uni-app 构建，
+// `UNI_PLATFORM` 未注入 → platform 为 undefined。此前变体一律返回 undefined，
+// 导致 `uni-xxx:` 类在编辑器里既无补全也无悬浮提示。修复后应剥离所有平台前缀、正常产出 CSS。
+describe('createVariants · 编辑器场景（platform 未定义）', () => {
+  const editor: PlatformProfile = { isMp: false, platform: undefined }
+
+  // 这里用的是内置 theme（theme.ts 从 builtInPlatforms 派生：mp、各平台全名、去 mp- 前缀的别名如 weixin）。
+  // `wechat` 不在内置别名里（需用户在 uno.config.ts 自定义 theme.platforms.wechat），故不在此断言。
+  it('内置平台变体都剥离前缀并产出 CSS', async () => {
+    for (const input of ['uni-mp:mx-auto', 'uni-mp-weixin:mx-auto', 'uni-weixin:mx-auto']) {
+      const layer = defaultLayer(await generate(editor, input))
+      expect(layer, input).toMatch(/margin-left:auto/)
+      expect(layer, input).toMatch(/margin-right:auto/)
+    }
+  })
+
+  it('与其它变体叠加时链式仍产出', async () => {
+    const layer = defaultLayer(await generate(editor, 'uni-weixin:hover:mx-auto'))
+    expect(layer).toMatch(/:hover/)
+    expect(layer).toMatch(/margin-left:auto/)
+  })
+
+  // 未知别名（未在 theme.platforms 注册）即便非构建场景也不产出：matchPlatform 解析为空，
+  // `if (matchPlatform)` 门关拦下，match() 不返回 handler。这锁死「未知平台 = 永不产出」的边界契约。
+  it('未知别名即使非构建场景也不产出 CSS', async () => {
+    expect(defaultLayer(await generate(editor, 'uni-unknown:mx-auto'))).toBe('')
+    // wechat 不在内置别名（仅 weixin / mp-weixin），默认同样不产出
+    expect(defaultLayer(await generate(editor, 'uni-wechat:mx-auto'))).toBe('')
+  })
+})

@@ -1,7 +1,7 @@
 import type { UserConfig } from '@unocss/core'
 import { createGenerator } from '@unocss/core'
 import { describe, expect, it } from 'vitest'
-import { presetUni } from '../src/presetUni'
+import { presetUni } from '../src/preset-uni'
 
 // 端到端验证 presetUni() 的 configResolved：自动把小程序 attributify transformer
 // 挂到 UnoCSS 配置上，用户无需手动注册。这是 presetUni 唯一带运行时副作用（修改 config）的逻辑，
