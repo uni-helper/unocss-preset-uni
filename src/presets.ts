@@ -12,7 +12,7 @@ import { presetApplet, presetRemRpx } from 'unocss-applet'
  * 小程序叠加 presetLegacyCompat，并按 `isMp` 在 presetApplet / presetWind3(4) 间切换；
  * 再按开关加入 presetRemRpx、presetAttributify。
  */
-export function createPresets(options: ResolvedUniPresetOptions) {
+export function createPresets(options: ResolvedUniPresetOptions): Preset<any>[] {
   const presets: Preset<any>[] = []
 
   if (isMp) {

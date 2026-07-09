@@ -1,6 +1,6 @@
 shellEmulator: true
 
-trustPolicy: no-downgrade
+trustPolicy: off
 
 packages:
   - playground
@@ -40,6 +40,7 @@ catalogs:
     vue-i18n: ^9.13.1
     vue-tsc: ^3.3.7
   unocss:
+    '@unocss/eslint-config': ~66.7.5
     '@unocss/preset-legacy-compat': ~66.7.5
     '@unocss/preset-mini': ~66.7.5
     '@unocss/rule-utils': ~66.7.5

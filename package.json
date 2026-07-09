@@ -59,6 +59,7 @@
   "devDependencies": {
     "@types/node": "catalog:types",
     "@uni-helper/eslint-config": "catalog:eslint",
+    "@unocss/eslint-config": "catalog:unocss",
     "bumpp": "catalog:utils",
     "eslint": "catalog:eslint",
     "esno": "catalog:utils",

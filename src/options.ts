@@ -7,7 +7,7 @@ import { isMp } from '@uni-helper/uni-env'
  * - `true` / 缺省且有默认值 → 用默认值；
  * - 传具体配置 → 与默认值浅合并（用户值优先）。
  */
-function parseOption<T>(value: T | boolean | undefined, defaultValue?: T) {
+function parseOption<T>(value: T | boolean | undefined, defaultValue?: T): false | T {
   if (value === false)
     return value
 

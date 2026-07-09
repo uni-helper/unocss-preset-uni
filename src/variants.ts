@@ -7,7 +7,7 @@ import { variantGetParameter } from '@unocss/rule-utils'
  * 构造 `uni-<platform>:` 平台条件变体，实现按平台编写样式。
  * 命中当前编译平台时保留选择器，否则追加 `-pass` 使该工具类不生效。
  */
-export function createVariants() {
+export function createVariants(): VariantObject[] {
   const platformVariants: VariantObject = {
     name: 'unocss-preset-uni-platforms',
     match(matcher: string, ctx: Readonly<VariantContext>) {
