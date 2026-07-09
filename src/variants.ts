@@ -6,7 +6,8 @@ import { detectPlatform } from './platform'
 
 /**
  * 构造 `uni-<platform>:` 平台条件变体，实现按平台编写样式。
- * 命中当前编译平台时保留选择器，否则追加 `-pass` 使该工具类不生效。
+ * 命中当前编译平台时剥离 `uni-xxx:` 前缀；不命中时返回 undefined，
+ * 走 UnoCSS 变体「无匹配即不产出」契约，该工具类在该平台完全不生成 CSS。
  *
  * @param profile 当前编译平台。默认探测真实环境；测试可显式传入以覆盖两端分支。
  */
@@ -24,12 +25,13 @@ export function createVariants(profile: PlatformProfile = detectPlatform()): Var
         matchPlatform = matchPlatform === '' ? platforms[match] ?? '' : matchPlatform
 
         if (matchPlatform) {
-          return {
-            matcher: rest,
-            // 当前编译平台命中时保留选择器；否则追加 `-pass` 后缀，生成的类名不会匹配任何元素，
-            // 等同于「该平台不生成此样式」。依赖 UnoCSS 不会校验选择器有效性这一行为。
-            selector: s => profile.platform !== undefined && profile.platform.startsWith(matchPlatform) ? s : `${s}-pass`,
-          }
+          // 命中当前编译平台时剥离 `uni-xxx:` 前缀、保留原始选择器；
+          // 不命中时返回 undefined，走 UnoCSS 变体的「无匹配即不产出」契约（matchVariants 对 falsy 返回值 continue），
+          // 该工具类在该平台完全不生成 CSS。这比早先追加 `-pass` 后缀更干净——后者会留下一份选择器匹配不到任何元素、
+          // 但仍进入产物包的死规则。
+          if (!(profile.platform !== undefined && profile.platform.startsWith(matchPlatform)))
+            return undefined
+          return { matcher: rest }
         }
       }
     },

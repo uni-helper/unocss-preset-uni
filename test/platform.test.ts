@@ -104,7 +104,8 @@ describe('createTransformers', () => {
 })
 
 // createVariants 是唯一按平台字符串前缀（而非布尔 isMp）分支的 builder：
-// 命中当前平台保留选择器，否则追加 `-pass` 使工具类不生效。这是 profile 线程化的核心收益之一。
+// 命中当前平台则剥离前缀保留原始 matcher，否则返回 undefined 走 UnoCSS「无匹配即不产出」契约，
+// 该工具类在不命中平台完全不生成 CSS。这是 profile 线程化的核心收益之一。
 describe('createVariants', () => {
   // UnoCSS 默认 separators 为 `[":", "-"]`（见 @unocss/core 的 configResolved 兜底），
   // 冒号优先于连字符切分，否则 `uni-weixin:mx-auto` 会在 `mx-auto` 的 `-` 处误切。
@@ -113,27 +114,37 @@ describe('createVariants', () => {
     theme: { platforms: { 'weixin': 'mp-weixin', 'mp-weixin': 'mp-weixin', 'h5': 'h5', 'mp': 'mp' } },
   } as unknown as Readonly<VariantContext>
 
-  it('keeps the selector when the variant targets the current platform', () => {
+  it('strips the platform prefix and keeps the matcher when targeting the current platform', () => {
     const match = createVariants(mpWeixin)[0].match
     const r = match!('uni-weixin:mx-auto', ctx)!
     expect(r.matcher).toBe('mx-auto')
-    expect(r.selector!('.a')).toBe('.a')
+    expect(r.selector).toBeUndefined()
   })
 
-  it('appends -pass when the variant targets a different platform', () => {
+  it('returns undefined when the variant targets a different platform', () => {
     const match = createVariants(h5)[0].match
-    const r = match!('uni-weixin:mx-auto', ctx)!
-    expect(r.selector!('.a')).toBe('.a-pass')
+    expect(match!('uni-weixin:mx-auto', ctx)).toBeUndefined()
   })
 
   it('matches by platform prefix, so uni-mp covers all mp-* platforms', () => {
     const match = createVariants(mpWeixin)[0].match
     const r = match!('uni-mp:mx-auto', ctx)!
-    expect(r.selector!('.a')).toBe('.a')
+    expect(r.matcher).toBe('mx-auto')
   })
 
   it('returns undefined for an unknown platform alias', () => {
     const match = createVariants(h5)[0].match
     expect(match!('uni-unknown:mx-auto', ctx)).toBeUndefined()
+  })
+
+  it('returns undefined for every uni-xxx: when platform is unset (outside a uni build)', () => {
+    const match = createVariants({ isMp: false, platform: undefined })[0].match
+    expect(match!('uni-weixin:mx-auto', ctx)).toBeUndefined()
+  })
+
+  it('supports bracket syntax for explicit platform names', () => {
+    const match = createVariants(mpWeixin)[0].match
+    const r = match!('uni-[mp-weixin]:mx-auto', ctx)!
+    expect(r.matcher).toBe('mx-auto')
   })
 })
