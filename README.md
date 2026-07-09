@@ -315,6 +315,10 @@ platforms = {
 
 </details>
 
+> **编辑器提示**：VSCode 的 UnoCSS 插件直接加载 `uno.config.ts`，不经过 uni-app 构建，因此无法知道当前编译平台。为此，非构建场景（`UNI_PLATFORM` 未注入）下预设会**剥离所有平台前缀**，让每个 `uni-xxx:` 工具类都正常产出 CSS 并提供悬浮提示与补全。
+
+> 注意：编辑器预览只反映工具类本身的样式，不代表该类最终会出现在某平台产物中——是否产出仍取决于构建时的平台过滤。受支持的 vite 构建路径不受影响：`@dcloudio/vite-plugin-uni` 在加载 `uno.config.ts` 前即注入 `UNI_PLATFORM`。
+
 ## 感谢
 
 - [unocss](https://github.com/unocss/unocss.git) 提供大部分函数
