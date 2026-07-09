@@ -6,16 +6,19 @@ export type PresetAttributifyOptions = Parameters<typeof presetAttributify>[numb
 
 export interface UniPresetOptions {
   /**
-   * 开关/配置 PresetUno
+   * 开关/配置 wind3（默认）/ wind4 预设
    *
    * @default true
    * @summary 小程序平台将自动使用 PresetApplet
+   *
+   * `preset` / `presetOptions` 在小程序与其它平台两端均生效：
+   * 小程序整体透传给 presetApplet，其它平台（H5、App、快应用等）直接据此选择 presetWind3 / presetWind4。
    */
   uno: boolean | PresetAppletOptions
   /**
    * 开关/配置 presetRemRpx
    * @default true
-   * @default { mode: 'rpx2rem' } // 除了小程序平台
+   * @default { mode: 'rpx2rem' } // 其它平台；小程序端不传 mode，由 presetRemRpx 默认走 rem2rpx
    */
   remRpx: boolean | RemRpxOptions
   /**
