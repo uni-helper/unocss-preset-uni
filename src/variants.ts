@@ -1,13 +1,16 @@
 import type { VariantContext, VariantObject } from 'unocss'
-import { platform } from '@uni-helper/uni-env'
+import type { PlatformProfile } from './platform'
 import { h } from '@unocss/preset-mini/utils'
 import { variantGetParameter } from '@unocss/rule-utils'
+import { detectPlatform } from './platform'
 
 /**
  * 构造 `uni-<platform>:` 平台条件变体，实现按平台编写样式。
  * 命中当前编译平台时保留选择器，否则追加 `-pass` 使该工具类不生效。
+ *
+ * @param profile 当前编译平台。默认探测真实环境；测试可显式传入以覆盖两端分支。
  */
-export function createVariants(): VariantObject[] {
+export function createVariants(profile: PlatformProfile = detectPlatform()): VariantObject[] {
   const platformVariants: VariantObject = {
     name: 'unocss-preset-uni-platforms',
     match(matcher: string, ctx: Readonly<VariantContext>) {
@@ -25,7 +28,7 @@ export function createVariants(): VariantObject[] {
             matcher: rest,
             // 当前编译平台命中时保留选择器；否则追加 `-pass` 后缀，生成的类名不会匹配任何元素，
             // 等同于「该平台不生成此样式」。依赖 UnoCSS 不会校验选择器有效性这一行为。
-            selector: s => platform !== undefined && platform.startsWith(matchPlatform) ? s : `${s}-pass`,
+            selector: s => profile.platform !== undefined && profile.platform.startsWith(matchPlatform) ? s : `${s}-pass`,
           }
         }
       }

@@ -2,14 +2,16 @@ import type { PresetFactory } from 'unocss'
 import type { UserUniPresetOptions } from './types'
 import { definePreset } from 'unocss'
 import { resolveOptions } from './options'
+import { detectPlatform } from './platform'
 import { createPresets } from './presets'
 import { theme } from './theme'
 import { createTransformers } from './transformers'
 import { createVariants } from './variants'
 
-export type { Theme } from '@unocss/preset-mini'
+export type { PlatformProfile } from './platform'
 
-export { createPresets, createTransformers, createVariants, resolveOptions, theme }
+export { createPresets, createTransformers, createVariants, detectPlatform, resolveOptions, theme }
+export type { Theme } from '@unocss/preset-mini'
 
 /**
  * uni-app 的 UnoCSS 预设入口。
@@ -22,14 +24,18 @@ export { createPresets, createTransformers, createVariants, resolveOptions, them
  *
  * 同时内置 presetRemRpx、presetAttributify 与按平台编写样式（`uni-xxx:`）的 variants。
  *
+ * 平台判定在入口处探测一次（`detectPlatform()`），再作为 `PlatformProfile` 值向下传递给各 builder，
+ * 避免每个 builder 各自 import env、把平台选择这条最值得测的链路锁死在模块级常量上。
+ *
  * @param userOptions 选项，均为可选；任一能力传 `false` 可关闭对应预设。
  * @returns UnoCSS Preset。
  */
 export const presetUni: PresetFactory<object, UserUniPresetOptions> = definePreset((userOptions = {}) => {
-  const options = resolveOptions(userOptions)
-  const presets = createPresets(options)
-  const variants = createVariants()
-  const transformers = createTransformers(options)
+  const profile = detectPlatform()
+  const options = resolveOptions(userOptions, profile)
+  const presets = createPresets(options, profile)
+  const variants = createVariants(profile)
+  const transformers = createTransformers(options, profile)
 
   return {
     name: 'unocss-preset-uni',

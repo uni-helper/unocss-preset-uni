@@ -34,13 +34,15 @@
 .
 ├── src/                 # 预设源码（发布的包内容）
 │   ├── index.ts         # 入口，重新导出 presetUni 与类型
-│   ├── presetUni.ts     # 预设主入口，组装 presets/variants/theme/transformers
+│   ├── presetUni.ts     # 预设主入口，探测平台并组装 presets/variants/theme/transformers
+│   ├── platform.ts      # 平台探测：detectPlatform() 归一化为 PlatformProfile 值
 │   ├── options.ts       # 用户选项归一化（boolean|T → false|T，注入平台默认值）
-│   ├── presets.ts       # 按平台构造 preset 列表（核心分支逻辑）
+│   ├── presets.ts       # 按 PlatformProfile 构造 preset 列表（核心分支逻辑）
 │   ├── transformers.ts  # 小程序 attributify transformer 装配
 │   ├── variants.ts      # uni-<platform>: 按平台编写样式
 │   ├── theme.ts         # theme.platforms 平台匹配表
 │   └── types.ts         # 选项与对外类型
+├── test/                # 单元测试（vitest），对两端 profile 各跑一遍分支
 ├── playground/          # uni-app 集成示例（开发预览，不发布）
 ├── tsdown.config.ts     # 构建配置
 ├── pnpm-workspace.yaml  # workspace 与 catalog 定义
@@ -56,8 +58,9 @@
 ```mermaid
 flowchart TD
   user["用户调用<br/>presetUni(options)"]
+  detect["detectPlatform()<br/>归一化为 PlatformProfile<br/>{ isMp, platform }"]
   resolve["resolveOptions<br/>归一化选项 + 注入平台默认值"]
-  isMp{"isMp<br/>(小程序?)"}
+  isMp{"profile.isMp<br/>(小程序?)"}
 
   subgraph 预设列表
     legacy["presetLegacyCompat<br/>色彩空间回退<br/>(仅小程序)"]
@@ -73,8 +76,9 @@ flowchart TD
 
   uno["交给 UnoCSS 的 Preset"]
 
-  user --> resolve
-  resolve --> isMp
+  user --> detect
+  detect --> resolve
+  detect -->|profile 值向下传递| isMp
   isMp -->|是| legacy
   isMp -->|是| applet
   isMp -->|否| windH5
@@ -92,6 +96,7 @@ flowchart TD
 
 **关键点：**
 
+- 平台判定在 `presetUni()` 入口探测一次（`detectPlatform()`），得到 `PlatformProfile`（`{ isMp, platform }`），再作为值向下传给 `resolveOptions` / `createPresets` / `createTransformers` / `createVariants`。这样 builder 不再各自 import `@uni-helper/uni-env`，分支逻辑可在单测中显式构造两种 profile 各跑一遍。
 - `options.uno.preset` / `options.uno.presetOptions` 在小程序与其它平台**两端均生效**：小程序整体透传给 `presetApplet`，其它平台直接据此选择 `presetWind3` / `presetWind4`。
 - 小程序端额外叠加 `presetLegacyCompat`：小程序 wxss 不支持 `oklch`/`oklab` 等新色彩空间，该预设把 `color()` 中的色彩空间回退为兼容写法。
 - `transformerAttributify` 仅小程序平台需要并在 `configResolved` 中自动注册：小程序 wxss 不支持属性选择器（如 `[un-text='']`），必须在构建期把属性用法编译成 `class`；其它平台上游 `preset-attributify` 的属性选择器即可工作。
@@ -101,9 +106,10 @@ flowchart TD
 
 | 文件 | 职责 |
 | --- | --- |
-| `src/presetUni.ts` | 预设主入口。组装 presets/variants/theme，并在 `configResolved` 中自动挂载 transformer。 |
-| `src/options.ts` | 把每项 `boolean \| T \| undefined` 选项归一化为 `false \| T`，注入平台相关默认值（小程序 attributify 忽略 `block`/`fixed`；remRpx 两端 mode 不同）。 |
-| `src/presets.ts` | 核心分支逻辑：按 `isMp` 在 `presetApplet` 与 `presetWind3`/`presetWind4` 间切换，小程序叠加 `presetLegacyCompat`，再按开关加入 `presetRemRpx`、`presetAttributify`。 |
+| `src/presetUni.ts` | 预设主入口。调用 `detectPlatform()` 探测一次平台，把 `PlatformProfile` 向下传递给各 builder，组装 presets/variants/theme，并在 `configResolved` 中自动挂载 transformer。 |
+| `src/platform.ts` | 平台探测。`detectPlatform()` 把 `@uni-helper/uni-env` 的模块级常量（`isMp`、`platform`）归一化为 `PlatformProfile` 值；env 导入只留在此文件，builder 通过入参拿到 profile，便于测试覆盖两端分支。 |
+| `src/options.ts` | 把每项 `boolean \| T \| undefined` 选项归一化为 `false \| T`，按传入的 `PlatformProfile` 注入平台相关默认值（小程序 attributify 忽略 `block`/`fixed`；remRpx 两端 mode 不同）。 |
+| `src/presets.ts` | 核心分支逻辑：按 `PlatformProfile.isMp` 在 `presetApplet` 与 `presetWind3`/`presetWind4` 间切换，小程序叠加 `presetLegacyCompat`，再按开关加入 `presetRemRpx`、`presetAttributify`。 |
 | `src/transformers.ts` | 构造需自动注册的源码 transformer 列表。仅小程序平台且开启 attributify 时返回 `transformerAttributify`，其它平台返回空数组。 |
 | `src/variants.ts` | `uni-<platform>:` 平台条件变体。命中当前编译平台时保留选择器，否则追加 `-pass` 使该工具类不生效。 |
 | `src/theme.ts` | 由 `@uni-helper/uni-env` 的 `builtInPlatforms` 派生 `theme.platforms` 匹配表（含去掉 `mp-` 前缀的别名）。 |
@@ -124,7 +130,10 @@ pnpm build
 # 4. 类型检查
 pnpm typecheck
 
-# 5. Lint（自动修复）
+# 5. 单元测试（对小程序与其它平台两种 PlatformProfile 各跑一遍分支逻辑）
+pnpm test
+
+# 6. Lint（自动修复）
 pnpm lint:fix
 ```
 
@@ -176,7 +185,7 @@ build: migrate from unbuild to tsdown
 ### PR 流程
 
 1. Fork 仓库并从 `main` 切出特性分支。
-2. 确保 `pnpm typecheck`、`pnpm lint`、`pnpm build` 全部通过。
+2. 确保 `pnpm typecheck`、`pnpm lint`、`pnpm test`、`pnpm build` 全部通过。
 3. 若改动影响生成 CSS，在 `playground/` 中验证 H5 与小程序两端产物。
 4. 关联相关 issue。
 
