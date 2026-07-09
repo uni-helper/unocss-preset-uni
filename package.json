@@ -2,8 +2,8 @@
   "name": "@uni-helper/unocss-preset-uni",
   "type": "module",
   "version": "0.2.11",
-  "packageManager": "pnpm@9.15.4",
-  "description": "",
+  "packageManager": "pnpm@10.34.4",
+  "description": "UnoCSS preset for uni-app. Auto-switches between wind3/wind4 on H5 and preset-applet on mini-programs, with rem/rpx, attributify and per-platform variants built in.",
   "author": "KeJun",
   "license": "MIT",
   "homepage": "https://github.com/uni-helper/unocss-preset-uni#readme",
@@ -20,68 +20,51 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.mts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      }
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
     }
   },
-  "main": "./dist/index.cjs",
+  "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "scripts"
+    "dist"
   ],
   "scripts": {
-    "build": "unbuild",
-    "dev": "unbuild --stub",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "prepublishOnly": "pnpm build",
     "release": "bumpp",
     "start": "esno src/index.ts",
     "test": "vitest",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "play:mp-weixin": "npm -C playground run dev:mp-weixin",
     "build:mp-weixin": "npm -C playground run build:mp-weixin",
     "play:h5": "npm -C playground run dev:h5",
-    "build:h5": "npm -C playground run build:h5",
-    "postinstall": "node scripts/apply-patch.mjs"
+    "build:h5": "npm -C playground run build:h5"
   },
   "peerDependencies": {
-    "unocss": ">=0.58",
-    "unocss-applet": ">=0.7"
-  },
-  "peerDependenciesMeta": {
-    "@unocss/preset-mini": {
-      "optional": true
-    },
-    "@unocss/vite": {
-      "optional": true
-    }
+    "unocss": "catalog:unocss",
+    "unocss-applet": "catalog:unocss"
   },
   "dependencies": {
-    "@uni-helper/uni-env": "^0.1.7",
-    "@unocss/preset-legacy-compat": ">=0.58",
-    "@unocss/preset-mini": ">=0.58",
-    "@unocss/rule-utils": ">=0.58",
-    "@unocss/vite": ">=0.58"
+    "@uni-helper/uni-env": "catalog:utils",
+    "@unocss/preset-legacy-compat": "catalog:unocss",
+    "@unocss/preset-mini": "catalog:unocss",
+    "@unocss/rule-utils": "catalog:unocss",
+    "unocss": "catalog:unocss",
+    "unocss-applet": "catalog:unocss"
   },
   "devDependencies": {
-    "@types/node": "^20.17.12",
-    "@uni-helper/eslint-config": "^0.2.2",
-    "bumpp": "^9.10.0",
-    "eslint": "^9.18.0",
-    "esno": "^4.8.0",
-    "typescript": "^5.7.3",
-    "unbuild": "^3.3.1",
-    "unocss": "^0.65.4",
-    "unocss-applet": "^0.9.0",
-    "vite": "^5.4.11",
-    "vitest": "^2.1.8"
+    "@types/node": "catalog:types",
+    "@uni-helper/eslint-config": "catalog:eslint",
+    "bumpp": "catalog:utils",
+    "eslint": "catalog:eslint",
+    "esno": "catalog:utils",
+    "tsdown": "catalog:utils",
+    "typescript": "catalog:typescript",
+    "vite": "catalog:vite",
+    "vitest": "catalog:vite"
   }
 }
