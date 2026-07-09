@@ -1,2 +1,2 @@
-export * from './presetUni'
+export * from './preset-uni'
 export * from './types'
