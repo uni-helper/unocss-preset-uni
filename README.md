@@ -28,7 +28,7 @@ pnpm add @uni-helper/unocss-preset-uni -D
 pnpm add unocss unocss-applet -D
 ```
 
-本预设要求 `unocss` 与 `unocss-applet` 与之版本对齐：`unocss ~66.7.5`、`unocss-applet ^0.13.8`。安装时 pnpm 会按 peerDependencies 提示对齐。
+本预设对 `unocss`、`unocss-applet` 与 Node.js 的版本要求见[兼容性](#兼容性)表格。安装时 pnpm 会按 peerDependencies 提示对齐。
 
 ### 配置
 
@@ -318,6 +318,20 @@ platforms = {
 > **编辑器提示**：VSCode 的 UnoCSS 插件直接加载 `uno.config.ts`，不经过 uni-app 构建，因此无法知道当前编译平台。为此，非构建场景（`UNI_PLATFORM` 未注入）下预设会**剥离所有平台前缀**，让每个 `uni-xxx:` 工具类都正常产出 CSS 并提供悬浮提示与补全。
 
 > 注意：编辑器预览只反映工具类本身的样式，不代表该类最终会出现在某平台产物中——是否产出仍取决于构建时的平台过滤。受支持的 vite 构建路径不受影响：`@dcloudio/vite-plugin-uni` 在加载 `uno.config.ts` 前即注入 `UNI_PLATFORM`。
+
+## 兼容性
+
+> 建议始终使用 Node.js 最新的 LTS 版本。
+
+| unocss | unocss-applet | @uni-helper/unocss-preset-uni | Node.js | 备注 |
+|--------|---------------|-------------------------------|---------|------|
+| ~66.8.1 | ^0.14.0 | ^0.4.0 | >=22.12 | 起声明 engines；unocss-applet 0.14.0 移除了 `AppletConfig` / `UserAppletConfig` 类型 |
+| ~66.7.5 | ^0.13.8 | ^0.3.0 | 未声明 | unocss 66.x 与 unocss-applet 0.13.x 均未声明 engines，CI 验证于 Node.js 22 |
+| >=0.58 | >=0.7 | ^0.2.8 | >=14 | peer 放宽为开放范围，Node.js 下限随所选 unocss 版本 |
+| ^0.58.0 | ^0.7.8 | ^0.2.6 | >=14 | |
+| ^0.57.7 | ^0.7.8 | ^0.2.5 | >=14 | |
+| ^0.57.1 | ^0.7.5 \|\| ^0.7.7 | ^0.2.3 | >=14 | |
+| ^0.56.5 | ^0.5.5 \|\| ^0.6.1 \|\| ^0.7.5 | 0.0.1 ~ 0.2.2 | >=14 | |
 
 ## 感谢
 
