@@ -2,7 +2,7 @@
   "name": "@uni-helper/unocss-preset-uni",
   "type": "module",
   "version": "0.3.1",
-  "packageManager": "pnpm@10.34.4",
+  "packageManager": "pnpm@10.34.5",
   "description": "UnoCSS preset for uni-app. Auto-switches between wind3/wind4 on H5 and preset-applet on mini-programs, with rem/rpx, attributify and per-platform variants built in.",
   "author": "KeJun",
   "license": "MIT",
@@ -49,7 +49,7 @@
     "unocss-applet": "catalog:unocss"
   },
   "dependencies": {
-    "@uni-helper/uni-env": "catalog:utils",
+    "@uni-helper/uni-env": "catalog:uni-app",
     "@unocss/preset-legacy-compat": "catalog:unocss",
     "@unocss/preset-mini": "catalog:unocss",
     "@unocss/rule-utils": "catalog:unocss",
