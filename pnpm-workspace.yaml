@@ -25,19 +25,27 @@ minimumReleaseAgeExclude:
   - '@unocss/vite@66.10.1'
   - '@unocss/webpack@66.10.1'
   - unocss@66.10.1
-  - unocss-applet@0.15.0
-  - '@unocss-applet/preset-applet@0.15.0'
-  - '@unocss-applet/preset-rem-rpx@0.15.0'
-  - '@unocss-applet/transformer-attributify@0.15.0'
-  - '@unocss-applet/transformer-hover@0.15.0'
+  - unocss-applet@0.15.1
+  - '@unocss-applet/preset-applet@0.15.1'
+  - '@unocss-applet/preset-rem-rpx@0.15.1'
+  - '@unocss-applet/transformer-attributify@0.15.1'
+  - '@unocss-applet/transformer-hover@0.15.1'
   - '@unocss/preset-legacy-compat@66.10.1'
-
-shellEmulator: true
+  - '@rolldown/binding-openharmony-arm64@1.2.8'
 
 trustPolicy: off
+shellEmulator: true
 
 packages:
   - playground
+
+configDependencies:
+  '@pnpm/plugin-trusted-deps': ^0.2.2
+
+allowBuilds:
+  core-js: true
+  core-js-pure: true
+  esbuild: true
 
 catalogs:
   eslint:
@@ -82,18 +90,10 @@ catalogs:
     '@unocss/preset-mini': ~66.10.1
     '@unocss/rule-utils': ~66.10.1
     unocss: ~66.10.1
-    unocss-applet: ^0.15.0
+    unocss-applet: ^0.15.1
   utils:
     bumpp: ^12.3.0
     tsdown: ^0.23.0
   vite:
     vite: ^5.4.21
     vitest: ^3.2.7
-
-configDependencies:
-  '@pnpm/plugin-trusted-deps': ^0.2.2
-
-allowBuilds:
-  core-js: true
-  core-js-pure: true
-  esbuild: true
