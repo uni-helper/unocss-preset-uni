@@ -15,8 +15,8 @@
 
 | 依赖 | 版本 |
 | --- | --- |
-| Node | 22（见 `.node-version`） |
-| pnpm | 10.34.4（见 `package.json` 的 `packageManager`） |
+| Node | 26（见 `.node-version` 与 `package.json` 的 `devEngines`） |
+| pnpm | 12.3.4（见 `package.json` 的 `packageManager`） |
 
 建议启用 [corepack](https://nodejs.org/api/corepack.html) 自动切换 pnpm 版本：`corepack enable`。
 
@@ -34,7 +34,7 @@
 .
 ├── src/                 # 预设源码（发布的包内容）
 │   ├── index.ts         # 入口，重新导出 presetUni 与类型
-│   ├── presetUni.ts     # 预设主入口，探测平台并组装 presets/variants/theme/transformers
+│   ├── preset-uni.ts    # 预设主入口，探测平台并组装 presets/variants/theme/transformers
 │   ├── platform.ts      # 平台探测：detectPlatform() 归一化为 PlatformProfile 值
 │   ├── options.ts       # 用户选项归一化（boolean|T → false|T，注入平台默认值）
 │   ├── presets.ts       # 按 PlatformProfile 构造 preset 列表（核心分支逻辑）
@@ -106,7 +106,7 @@ flowchart TD
 
 | 文件 | 职责 |
 | --- | --- |
-| `src/presetUni.ts` | 预设主入口。调用 `detectPlatform()` 探测一次平台，把 `PlatformProfile` 向下传递给各 builder，组装 presets/variants/theme，并在 `configResolved` 中自动挂载 transformer。 |
+| `src/preset-uni.ts` | 预设主入口。调用 `detectPlatform()` 探测一次平台，把 `PlatformProfile` 向下传递给各 builder，组装 presets/variants/theme，并在 `configResolved` 中自动挂载 transformer。 |
 | `src/platform.ts` | 平台探测。`detectPlatform()` 把 `@uni-helper/uni-env` 的模块级常量（`isMp`、`platform`）归一化为 `PlatformProfile` 值；env 导入只留在此文件，builder 通过入参拿到 profile，便于测试覆盖两端分支。 |
 | `src/options.ts` | 把每项 `boolean \| T \| undefined` 选项归一化为 `false \| T`，按传入的 `PlatformProfile` 注入平台相关默认值（小程序 attributify 忽略 `block`/`fixed`；remRpx 两端 mode 不同）。 |
 | `src/presets.ts` | 核心分支逻辑：按 `PlatformProfile.isMp` 在 `presetApplet` 与 `presetWind3`/`presetWind4` 间切换，小程序叠加 `presetLegacyCompat`，再按开关加入 `presetRemRpx`、`presetAttributify`。 |
@@ -160,7 +160,7 @@ playground 通过 `workspace:*` 引用本包，`pnpm dev` 持续重建 `dist/` �
 
 | catalog | 用途 | 典型条目 |
 | --- | --- | --- |
-| `unocss` | 与 unocss-applet 对齐，统一锁上游版本 | `unocss`、`unocss-applet`、`@unocss/preset-mini`、`@unocss/rule-utils` 等 |
+| `unocss` | 与 unocss-applet 对齐，统一锁上游版本 | `unocss`、`unocss-applet`、`@unocss/preset-mini`、`@unocss/preset-legacy-compat`、`@unocss/rule-utils` 等 |
 | `uni-app` | playground 的 uni-app 框架与配套依赖 | `@dcloudio/*`、`vue`、`vue-i18n`、`vue-tsc`、`@iconify-json/carbon` |
 | `vite` / `typescript` / `types` / `utils` / `eslint` | 通用工具链 | `vite`、`vitest`、`typescript`、`@types/node` 等 |
 
