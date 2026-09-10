@@ -5,19 +5,19 @@ import { variantGetParameter } from '@unocss/rule-utils'
 import { detectPlatform } from './platform'
 
 /**
- * 构造 `uni-<platform>:` 平台条件变体，实现按平台编写样式。
+ * `uni-<platform>:` 平台条件变体，用来按平台写样式。
  *
- * 剥离 `uni-xxx:` 前缀的判定分两种场景：
- * - 构建场景（`profile.platform` 有值，由 uni-app 构建注入 `UNI_PLATFORM`）：
- *   仅当前编译平台命中时剥离前缀；其余平台返回 undefined，走 UnoCSS 变体「无匹配即不产出」契约，
- *   该工具类在该平台完全不生成 CSS。
- * - 非构建场景（`profile.platform === undefined`，即未在 uni-app 构建上下文中——
- *   典型是 VSCode 语言服务直接加载 uno.config.ts）：剥离所有平台前缀、保留工具类，
- *   使编辑器对 `uni-xxx:mx-auto` 正常产出 CSS，从而提供悬浮提示与补全。
- *   真实生效与否仍由构建时的平台过滤决定（`@dcloudio/vite-plugin-uni` 在加载 uno.config.ts 前
- *   即注入 `UNI_PLATFORM`，故受支持的 vite 构建路径不会落入此分支）。
+ * 剥 `uni-xxx:` 前缀分两种场景：
+ * - 构建场景（`profile.platform` 有值，uni-app 构建时会注入 `UNI_PLATFORM`）：
+ *   只有命中当前编译平台才剥前缀；其它平台返回 undefined，
+ *   走 UnoCSS 变体「没匹配就不产出」的约定，这个工具类在那个平台完全不会生成 CSS。
+ * - 非构建场景（`profile.platform === undefined`，即不在 uni-app 构建环境里——
+ *   典型是 VSCode 插件直接加载 uno.config.ts）：剥掉所有平台前缀、保留工具类，
+ *   让编辑器对 `uni-xxx:mx-auto` 能正常生成 CSS，提供悬浮提示和补全。
+ *   真正生不生效还是由构建时的平台过滤决定（`@dcloudio/vite-plugin-uni` 在加载 uno.config.ts 前
+ *   就注入了 `UNI_PLATFORM`，所以正常的 vite 构建不会走到这个分支）。
  *
- * @param profile 当前编译平台。默认探测真实环境；测试可显式传入以覆盖两场景。
+ * @param profile 当前编译平台。不传就自动探测；测试时可以手动传入，分别跑两种场景。
  */
 export function createVariants(profile: PlatformProfile = detectPlatform()): VariantObject[] {
   const platformVariants: VariantObject = {
@@ -26,25 +26,25 @@ export function createVariants(profile: PlatformProfile = detectPlatform()): Var
       const variant = variantGetParameter('uni-', matcher, ctx.generator.config.separators)
       if (variant) {
         const [match, rest] = variant
-        // 支持用方括号显式写平台名，如 `uni-[mp-weixin]:mx-auto`
+        // 支持方括号里直接写平台名，比如 `uni-[mp-weixin]:mx-auto`
         let matchPlatform = h.bracket(match) ?? ''
         const { platforms = {} } = ctx.theme as any
-        // 没有方括号时，从 theme.platforms 查表（含别名，如 weixin -> mp-weixin）
+        // 没写方括号就从 theme.platforms 查表（含别名，比如 weixin -> mp-weixin）
         matchPlatform = matchPlatform === '' ? platforms[match] ?? '' : matchPlatform
 
         if (matchPlatform) {
-          // 构建场景仅命中当前编译平台时剥离前缀；不命中平台返回 undefined，走 UnoCSS 变体的
-          // 「无匹配即不产出」契约（@unocss/core matchVariants 对 falsy 返回值 continue），该工具类
-          // 在该平台完全不生成 CSS。
-          // 非构建场景（platform === undefined，VSCode 等不走 uni-app 构建）剥离所有平台前缀、保留工具类，
-          // 使编辑器能产出 CSS 并提供悬浮提示；真实生效与否仍由构建时的平台过滤决定。
+          // 构建场景：只有命中当前编译平台才剥前缀；不命中就返回 undefined，
+          // 走 UnoCSS 变体「没匹配就不产出」的约定（@unocss/core 的 matchVariants 对 falsy 返回值直接 continue），
+          // 这个工具类在那个平台完全不会生成 CSS。
+          // 非构建场景（platform === undefined，比如 VSCode 不走 uni-app 构建）：剥掉所有平台前缀、保留工具类，
+          // 让编辑器能生成 CSS 并提供悬浮提示；真正生不生效还是由构建时的平台过滤决定。
           if (profile.platform !== undefined && !profile.platform.startsWith(matchPlatform))
             return undefined
           return { matcher: rest }
         }
       }
     },
-    // multiPass：平台变体可与其他变体（响应式、状态等）叠加匹配，而非只消费一次后即结束。
+    // multiPass：平台变体要能和其它变体（响应式、状态等）叠加着匹配，而不是匹配一次就结束。
     multiPass: true,
     autocomplete: 'uni-$platforms:',
   }

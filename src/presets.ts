@@ -9,17 +9,17 @@ import { presetApplet, presetRemRpx } from 'unocss-applet'
 import { detectPlatform } from './platform'
 
 /**
- * 根据归一化后的选项构造预设列表：
- * 小程序叠加 presetLegacyCompat，并按平台在 presetApplet / presetWind3(4) 间切换；
- * 再按开关加入 presetRemRpx、presetAttributify。
+ * 根据处理好的选项组装预设列表：
+ * 小程序端额外叠加 presetLegacyCompat，并按平台在 presetApplet / presetWind3(4) 之间切换；
+ * 再按开关加上 presetRemRpx、presetAttributify。
  *
- * 第二个参数 `profile` 为当前编译平台，默认探测真实环境；测试可显式传入以覆盖两端分支。
+ * 第二个参数 `profile` 表示当前编译平台，不传就自动探测。测试时可以手动传入，方便分别跑两种平台。
  */
 export function createPresets(options: ResolvedUniPresetOptions, profile: PlatformProfile = detectPlatform()): Preset<any>[] {
   const presets: Preset<any>[] = []
 
   if (profile.isMp) {
-    // 小程序 wxss 不支持 oklch/oklab 等新色彩空间，用 legacy-compat 回退到兼容写法。
+    // 小程序 wxss 不支持 oklch/oklab 这些新色彩空间，用 legacy-compat 回退成兼容写法。
     presets.push(presetLegacyCompat({
       commaStyleColorFunction: true,
       legacyColorSpace: true,
@@ -27,17 +27,17 @@ export function createPresets(options: ResolvedUniPresetOptions, profile: Platfo
   }
 
   if (options.uno) {
-    // options.uno 已被收窄为 PresetAppletOptions（来自 ResolvedUniPresetOptions），
-    // 其 `preset` / `presetOptions` 字段同时驱动两端：
-    //   - 小程序平台：整体透传给 presetApplet，由其内部按 preset 选择 wind3/wind4；
-    //   - 其它平台（H5、App、快应用等）：在此处直接按 preset 选择 presetWind3 / presetWind4。
-    // 这样 README 宣传的 `uno: { preset: 'wind4' }` 在两端行为一致。
+    // options.uno 此时一定是 PresetAppletOptions 类型（经过 ResolvedUniPresetOptions 处理），
+    // 里面的 `preset` / `presetOptions` 两端都生效：
+    //   - 小程序平台：整个透传给 presetApplet，由它内部按 preset 选 wind3/wind4；
+    //   - 其它平台（H5、App、快应用等）：在这里直接按 preset 选 presetWind3 / presetWind4。
+    // 这样 README 说的 `uno: { preset: 'wind4' }` 两端表现一致。
     if (profile.isMp) {
       presets.push(presetApplet(options.uno))
     }
     else if (options.uno.preset === 'wind4') {
-      // PresetAppletOptions.presetOptions 是 wind3/wind4 的联合类型，无法由 preset 字段收窄，
-      // 此处按 preset 显式断言（与 presetApplet 内部处理方式一致）。
+      // PresetAppletOptions.presetOptions 是 wind3/wind4 的联合类型，TS 没法根据 preset 字段自动收窄，
+      // 所以这里按 preset 显式断言（和 presetApplet 内部处理方式一样）。
       presets.push(presetWind4(options.uno.presetOptions as PresetWind4Options | undefined))
     }
     else {

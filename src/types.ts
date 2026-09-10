@@ -9,10 +9,10 @@ export interface UniPresetOptions {
    * 开关/配置 wind3（默认）/ wind4 预设
    *
    * @default true
-   * @summary 小程序平台将自动使用 PresetApplet
+   * @summary 小程序平台会自动使用 PresetApplet
    *
-   * `preset` / `presetOptions` 在小程序与其它平台两端均生效：
-   * 小程序整体透传给 presetApplet，其它平台（H5、App、快应用等）直接据此选择 presetWind3 / presetWind4。
+   * `preset` / `presetOptions` 在小程序和其它平台都生效：
+   * 小程序端整个透传给 presetApplet，其它平台（H5、App、快应用等）直接用它选 presetWind3 / presetWind4。
    */
   uno: boolean | PresetAppletOptions
   /**
@@ -25,7 +25,7 @@ export interface UniPresetOptions {
    * 开关/配置 presetAttributify
    * @default true
    * @default { ignoreAttributes: ['block', 'fixed'] } // 小程序平台
-   * @summary 小程序平台将自动使用 transformerAttributify
+   * @summary 小程序平台会自动使用 transformerAttributify
    */
   attributify: boolean | PresetAttributifyOptions
 }

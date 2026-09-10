@@ -3,10 +3,8 @@ import type { ResolvedUniPresetOptions, UniPresetOptions } from './types'
 import { detectPlatform } from './platform'
 
 /**
- * 把 `boolean | T | undefined` 形态的选项归一化为 `false | T`：
- * - `false` → 关闭该能力；
- * - `true` / 缺省且有默认值 → 用默认值；
- * - 传具体配置 → 与默认值浅合并（用户值优先）。
+ * 把 `boolean | T | undefined` 这种选项值统一处理成 `false | T`：
+ * 传 `false` 就是关闭；传 `true` 或者不传就用默认值；传了具体配置就和默认值浅合并（用户传的优先）。
  */
 function parseOption<T>(value: T | boolean | undefined, defaultValue?: T): false | T {
   if (value === false)
@@ -25,19 +23,19 @@ function parseOption<T>(value: T | boolean | undefined, defaultValue?: T): false
 }
 
 /**
- * 归一化用户选项：把每项 `boolean | T | undefined` 转为 `false | T`，
- * 并注入平台相关的默认值（小程序 attributify 需忽略 block/fixed；remRpx 两端 mode 不同）。
+ * 处理用户传进来的选项：每一项都从 `boolean | T | undefined` 转成 `false | T`，
+ * 同时补上平台相关的默认值（小程序端的 attributify 要忽略 block/fixed；remRpx 两端的 mode 不一样）。
  *
- * 第二个参数 `profile` 为当前编译平台，默认探测真实环境；测试可显式传入以覆盖两端分支。
+ * 第二个参数 `profile` 表示当前编译平台，不传就自动探测。测试时可以手动传入，方便分别跑两种平台。
  */
 export function resolveOptions(userOptions: Partial<UniPresetOptions> = {}, profile: PlatformProfile = detectPlatform()): ResolvedUniPresetOptions {
   const uno = parseOption(userOptions.uno, {})
-  // 小程序 attributify 需要忽略 block/fixed，避免与小程序原生属性冲突
+  // 小程序原生也有 block、fixed 这两个属性，attributify 要忽略它们，免得撞名
   const attributify = parseOption(
     userOptions.attributify,
     { ignoreAttributes: profile.isMp ? ['block', 'fixed'] : undefined },
   )
-  // remRpx：小程序端不显式传 mode，由 presetRemRpx 默认走 rem→rpx；其它平台传 rpx2rem（保留 rem）。
+  // remRpx：小程序端不传 mode，让 presetRemRpx 自己默认走 rem→rpx；其它平台传 rpx2rem，保留 rem。
   const remRpx = parseOption(
     userOptions.remRpx,
     { mode: profile.isMp ? undefined : 'rpx2rem' },
