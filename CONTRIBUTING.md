@@ -16,7 +16,7 @@
 | 依赖 | 版本 |
 | --- | --- |
 | Node | 26（见 `.node-version` 与 `package.json` 的 `devEngines`） |
-| pnpm | 12.3.4（见 `package.json` 的 `packageManager`） |
+| pnpm | 12.16.1（见 `package.json` 的 `packageManager`） |
 
 建议启用 [corepack](https://nodejs.org/api/corepack.html) 自动切换 pnpm 版本：`corepack enable`。
 
@@ -106,6 +106,7 @@ flowchart TD
 
 | 文件 | 职责 |
 | --- | --- |
+| `src/index.ts` | 发布产物的唯一入口，重新导出 `presetUni`、各 builder 与对外类型。 |
 | `src/preset-uni.ts` | 预设主入口。调用 `detectPlatform()` 探测一次平台，把 `PlatformProfile` 向下传递给各 builder，组装 presets/variants/theme，并在 `configResolved` 中自动挂载 transformer。 |
 | `src/platform.ts` | 平台探测。`detectPlatform()` 把 `@uni-helper/uni-env` 的模块级常量（`isMp`、`platform`）归一化为 `PlatformProfile` 值；env 导入只留在此文件，builder 通过入参拿到 profile，便于测试覆盖两端分支。 |
 | `src/options.ts` | 把每项 `boolean \| T \| undefined` 选项归一化为 `false \| T`，按传入的 `PlatformProfile` 注入平台相关默认值（小程序 attributify 忽略 `block`/`fixed`；remRpx 两端 mode 不同）。 |
@@ -126,16 +127,28 @@ pnpm dev
 
 # 3. 构建（产出 dist/index.mjs + dist/index.d.mts，ESM-only）
 pnpm build
-
-# 4. 类型检查
-pnpm typecheck
-
-# 5. 单元测试（对小程序与其它平台两种 PlatformProfile 各跑一遍分支逻辑）
-pnpm test
-
-# 6. Lint（自动修复）
-pnpm lint:fix
 ```
+
+## 测试与检查
+
+```bash
+pnpm test                          # 跑全部单元测试（vitest，watch 模式）
+pnpm vitest run                    # 只跑一遍，不进 watch
+pnpm vitest run test/platform.test.ts   # 只跑单个测试文件
+pnpm typecheck                     # tsc --noEmit，只检查 src
+pnpm lint                          # eslint .
+pnpm lint:fix                      # eslint . --fix
+```
+
+### 测试说明
+
+测试不依赖 uni-app 构建环境：平台相关的逻辑都把 `PlatformProfile` 当参数传下去，所以同一个进程里能分别构造小程序与其它平台两种 profile，把两端分支各跑一遍。`test/` 下三个文件测的层次不同：
+
+- `test/platform.test.ts`：选项归一化与预设组装（`resolveOptions` / `createPresets`），直接构造两种 profile 断言分支结果。
+- `test/preset-uni.test.ts`：用真实 `createGenerator` 触发 `configResolved`，断言小程序端会自动挂载 `transformerAttributify`，且不覆盖用户已有的 transformers。
+- `test/variants-emit.test.ts`：用真实的 `presetApplet` + `createVariants` + `theme` 生成 CSS，断言 `uni-<platform>:` 在命中与不命中平台时最终是否产出样式。
+
+CI（`.github/workflows/ci.yml`）依次跑 `build` → `build:mp-weixin` → `build:h5` → `lint` → `test` → `typecheck`，矩阵为 ubuntu / macos / windows × Node.js 22 / 24 / 26。
 
 ### 调试 playground
 
@@ -185,7 +198,17 @@ build: migrate from unbuild to tsdown
 ### PR 流程
 
 1. Fork 仓库并从 `main` 切出特性分支。
-2. 确保 `pnpm typecheck`、`pnpm lint`、`pnpm test`、`pnpm build` 全部通过。
+2. 在本地跑通与 CI 一致的全部检查：
+
+   ```bash
+   pnpm build
+   pnpm build:mp-weixin
+   pnpm build:h5
+   pnpm lint
+   pnpm test
+   pnpm typecheck
+   ```
+
 3. 若改动影响生成 CSS，在 `playground/` 中验证 H5 与小程序两端产物。
 4. 关联相关 issue。
 
@@ -199,4 +222,12 @@ pnpm release
 
 这会交互式升版本号、打 tag、推送，随后由 CI（GitHub Actions `.github/workflows/release.yml`）在收到 `v*` tag 时触发 `prepublishOnly`（即 `pnpm build`）并发布到 npm。贡献者无需关心发布。
 
-> 版本对齐：本预设的 `peerDependencies`（`unocss`、`unocss-applet`）通过 `catalog:unocss` 管理，升级上游时改 catalog 条目即可，消费者安装时由 pnpm 按 peerDependencies 提示对齐。
+> 版本对齐：本预设的 `peerDependencies`（`unocss`、`unocss-applet`）通过 `catalog:unocss` 管理，升级上游时改 catalog 条目即可。
+
+## 行为准则
+
+参与本项目即表示你同意遵守 [uni-helper 组织行为准则](https://github.com/uni-helper/.github/blob/main/CODE_OF_CONDUCT.md)。
+
+---
+
+有疑问或想先讨论方案，请开 [GitHub Issue](https://github.com/uni-helper/unocss-preset-uni/issues)。
