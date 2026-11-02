@@ -15,15 +15,25 @@ describe('presetUni · configResolved 自动挂载 transformer', () => {
   it('presetUni 能通过真实 createGenerator 正常装载（冒烟）', async () => {
     // 非 mp 平台：createTransformers 返回空数组，config.transformers 最终为空。
     // 主要价值是确认 presetUni() 整体能被 UnoCSS 接纳、configResolved 不抛错。
-    const names = await transformerNames({ presets: [presetUni({ attributify: true })] })
+    const names = await transformerNames({
+      presets: [
+        presetUni({ attributify: true }),
+      ],
+    })
     expect(names).toEqual([])
   })
 
   it('不覆盖用户已配置的 transformers（追加而非替换）', async () => {
     // 补齐 transform 使其满足完整 SourceCodeTransformer 接口，避免依赖 UnoCSS 的宽松校验。
-    const userTransformer = { name: 'user-fake-transformer', enforce: 'pre' as const, transform: () => {} }
+    const userTransformer = {
+      name: 'user-fake-transformer',
+      enforce: 'pre' as const,
+      transform: () => {},
+    }
     const names = await transformerNames({
-      presets: [presetUni()],
+      presets: [
+        presetUni(),
+      ],
       transformers: [userTransformer],
     })
     // 用户 transformer 必须保留；非 mp 平台自动列表为空，所以只剩用户的。

@@ -12,7 +12,9 @@ const h5: PlatformProfile = { isMp: false, platform: 'h5' }
 // UnoCSS 预设可能是 PresetFactory（definePreset 返回的函数）或已实例化的 Preset。
 // 这里把 factory 调一次拿到真实 Preset 再读 name，与 UnoCSS 合并 presets 时的处理一致。
 function nameOf(p: Preset<any> | ((...args: any[]) => Preset<any>)): string {
-  return (typeof p === 'function' ? (p as any)({}) : p)?.name ?? ''
+  return (typeof p === 'function'
+    ? (p as any)({})
+    : p)?.name ?? ''
 }
 
 function names(profile: PlatformProfile, userOptions: Parameters<typeof resolveOptions>[0] = {}): {
@@ -28,7 +30,9 @@ function names(profile: PlatformProfile, userOptions: Parameters<typeof resolveO
 
 describe('resolveOptions', () => {
   it('injects attributify ignoreAttributes only on mini-program', () => {
-    expect(resolveOptions({}, mpWeixin).attributify).toMatchObject({ ignoreAttributes: ['block', 'fixed'] })
+    expect(resolveOptions({}, mpWeixin).attributify).toMatchObject({
+      ignoreAttributes: ['block', 'fixed'],
+    })
     expect(resolveOptions({}, h5).attributify).toMatchObject({ ignoreAttributes: undefined })
   })
 
@@ -38,7 +42,9 @@ describe('resolveOptions', () => {
   })
 
   it('user config overrides platform defaults', () => {
-    expect(resolveOptions({ remRpx: { mode: 'rem2rpx' } }, h5).remRpx).toMatchObject({ mode: 'rem2rpx' })
+    expect(resolveOptions({
+      remRpx: { mode: 'rem2rpx' },
+    }, h5).remRpx).toMatchObject({ mode: 'rem2rpx' })
     expect(resolveOptions({ attributify: false }, mpWeixin).attributify).toBe(false)
   })
 
@@ -64,7 +70,9 @@ describe('createPresets', () => {
   })
 
   it('selects presetWind4 on non-mp when uno.preset is wind4', () => {
-    const { presets } = names(h5, { uno: { preset: 'wind4' } })
+    const { presets } = names(h5, {
+      uno: { preset: 'wind4' },
+    })
     expect(presets).toContain('@unocss/preset-wind4')
   })
 
@@ -110,8 +118,19 @@ describe('createVariants', () => {
   // UnoCSS 默认 separators 为 `[":", "-"]`（见 @unocss/core 的 configResolved 兜底），
   // 冒号优先于连字符切分，否则 `uni-weixin:mx-auto` 会在 `mx-auto` 的 `-` 处误切。
   const ctx = {
-    generator: { config: { separators: [':', '-'] } },
-    theme: { platforms: { 'weixin': 'mp-weixin', 'mp-weixin': 'mp-weixin', 'h5': 'h5', 'mp': 'mp' } },
+    generator: {
+      config: {
+        separators: [':', '-'],
+      },
+    },
+    theme: {
+      platforms: {
+        'weixin': 'mp-weixin',
+        'mp-weixin': 'mp-weixin',
+        'h5': 'h5',
+        'mp': 'mp',
+      },
+    },
   } as unknown as Readonly<VariantContext>
 
   it('strips the platform prefix and keeps the matcher when targeting the current platform', () => {

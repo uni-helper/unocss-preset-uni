@@ -11,7 +11,9 @@ import { createVariants } from '../src/variants'
 // 顺带堵住「presetApplet 的 postprocess 是否依赖变体返回 selector」的回归口子。
 async function generate(profile: PlatformProfile, input: string): Promise<string> {
   const g = await createGenerator({
-    presets: [presetApplet()],
+    presets: [
+      presetApplet(),
+    ],
     variants: createVariants(profile),
     theme: theme as any,
   })

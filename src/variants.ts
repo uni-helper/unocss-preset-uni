@@ -30,7 +30,9 @@ export function createVariants(profile: PlatformProfile = detectPlatform()): Var
         let matchPlatform = h.bracket(match) ?? ''
         const { platforms = {} } = ctx.theme as any
         // 没写方括号就从 theme.platforms 查表（含别名，比如 weixin -> mp-weixin）
-        matchPlatform = matchPlatform === '' ? platforms[match] ?? '' : matchPlatform
+        matchPlatform = matchPlatform === ''
+          ? platforms[match] ?? ''
+          : matchPlatform
 
         if (matchPlatform) {
           // 构建场景：只有命中当前编译平台才剥前缀；不命中就返回 undefined，

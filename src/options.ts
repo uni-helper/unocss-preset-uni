@@ -13,8 +13,12 @@ function parseOption<T>(value: T | boolean | undefined, defaultValue?: T): false
   if (value === true)
     return defaultValue ?? {} as T
 
-  if (value)
-    return { ...defaultValue, ...value }
+  if (value) {
+    return {
+      ...defaultValue,
+      ...value,
+    }
+  }
 
   if (defaultValue)
     return defaultValue
@@ -33,12 +37,18 @@ export function resolveOptions(userOptions: Partial<UniPresetOptions> = {}, prof
   // 小程序原生也有 block、fixed 这两个属性，attributify 要忽略它们，免得撞名
   const attributify = parseOption(
     userOptions.attributify,
-    { ignoreAttributes: profile.isMp ? ['block', 'fixed'] : undefined },
+    {
+      ignoreAttributes: profile.isMp
+        ? ['block', 'fixed']
+        : undefined,
+    },
   )
   // remRpx：小程序端不传 mode，让 presetRemRpx 自己默认走 rem→rpx；其它平台传 rpx2rem，保留 rem。
   const remRpx = parseOption(
     userOptions.remRpx,
-    { mode: profile.isMp ? undefined : 'rpx2rem' },
+    {
+      mode: profile.isMp ? undefined : 'rpx2rem',
+    },
   )
 
   return {

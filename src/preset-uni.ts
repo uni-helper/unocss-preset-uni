@@ -44,10 +44,15 @@ export const presetUni: PresetFactory<object, UserUniPresetOptions> = definePres
     theme,
     configResolved(config) {
       // 自动把小程序 attributify transformer 挂到 UnoCSS 配置上，用户不用自己注册。
-      if (!config.transformers)
+      if (!config.transformers) {
         config.transformers = transformers
-      else
-        config.transformers = [...config.transformers, ...transformers]
+      }
+      else {
+        config.transformers = [
+          ...config.transformers,
+          ...transformers,
+        ]
+      }
     },
   }
 })

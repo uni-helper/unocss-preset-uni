@@ -6,7 +6,12 @@ export default uni({
   // test/fixtures are transformer input/output text samples, not compilable app code —
   // they intentionally contain attributify pseudo-attributes (e.g. `text="red"`) that are
   // invalid as real JSX/HTML. Excluded from lint (and tsconfig exclude) for the same reason.
-  ignores: ['**node_modules/**', '**/dist/**', 'examples/**', 'test/fixtures/**'],
+  ignores: [
+    '**node_modules/**',
+    '**/dist/**',
+    'examples/**',
+    'test/fixtures/**',
+  ],
 }, {
   files: ['pnpm-workspace.yaml'],
   rules: {
