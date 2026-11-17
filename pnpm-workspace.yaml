@@ -1,9 +1,9 @@
 minimumReleaseAgeExclude:
-  - unocss-applet@0.16.1
-  - '@unocss-applet/preset-applet@0.16.1'
-  - '@unocss-applet/preset-rem-rpx@0.16.1'
-  - '@unocss-applet/transformer-attributify@0.16.1'
-  - '@unocss-applet/transformer-hover@0.16.1'
+  - '@unocss-applet/preset-applet@0.16.2'
+  - '@unocss-applet/preset-rem-rpx@0.16.2'
+  - '@unocss-applet/transformer-attributify@0.16.2'
+  - '@unocss-applet/transformer-hover@0.16.2'
+  - unocss-applet@0.16.2
 
 trustPolicy: off
 shellEmulator: true
@@ -56,13 +56,13 @@ catalogs:
     vue-i18n: ^9.13.1
     vue-tsc: ^3.3.14
   unocss:
-    '@unocss/core': ~66.12.0
-    '@unocss/eslint-config': ~66.12.0
-    '@unocss/preset-legacy-compat': ~66.12.0
-    '@unocss/preset-mini': ~66.12.0
-    '@unocss/rule-utils': ~66.12.0
-    unocss: ~66.12.0
-    unocss-applet: ^0.16.1
+    '@unocss/core': ~66.13.0
+    '@unocss/eslint-config': ~66.13.0
+    '@unocss/preset-legacy-compat': ~66.13.0
+    '@unocss/preset-mini': ~66.13.0
+    '@unocss/rule-utils': ~66.13.0
+    unocss: ~66.13.0
+    unocss-applet: ^0.16.2
   utils:
     bumpp: ^12.3.0
     tsdown: ^0.23.4
