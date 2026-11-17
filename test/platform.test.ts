@@ -29,11 +29,16 @@ function names(profile: PlatformProfile, userOptions: Parameters<typeof resolveO
 }
 
 describe('resolveOptions', () => {
-  it('injects attributify ignoreAttributes only on mini-program', () => {
-    expect(resolveOptions({}, mpWeixin).attributify).toMatchObject({
+  it('keeps attributify off when the option is omitted', () => {
+    expect(resolveOptions({}, mpWeixin).attributify).toBe(false)
+    expect(resolveOptions({}, h5).attributify).toBe(false)
+  })
+
+  it('injects attributify ignoreAttributes only on mini-program when enabled', () => {
+    expect(resolveOptions({ attributify: true }, mpWeixin).attributify).toMatchObject({
       ignoreAttributes: ['block', 'fixed'],
     })
-    expect(resolveOptions({}, h5).attributify).toMatchObject({ ignoreAttributes: undefined })
+    expect(resolveOptions({ attributify: true }, h5).attributify).toMatchObject({ ignoreAttributes: undefined })
   })
 
   it('defaults remRpx mode to rpx2rem on non-mp and leaves mp unset (rem2rpx upstream default)', () => {
@@ -82,6 +87,11 @@ describe('createPresets', () => {
     expect(presets.some(n => n.includes('attributify'))).toBe(false)
   })
 
+  it('adds no attributify preset by default on either platform', () => {
+    expect(names(h5).presets.some(n => n.includes('attributify'))).toBe(false)
+    expect(names(mpWeixin).presets.some(n => n.includes('attributify'))).toBe(false)
+  })
+
   it('includes remRpx preset on mini-program when enabled (default)', () => {
     expect(names(mpWeixin).presets.some(n => n.includes('rem-rpx'))).toBe(true)
   })
@@ -102,8 +112,12 @@ describe('createPresets', () => {
 
 describe('createTransformers', () => {
   it('registers transformerAttributify only on mini-program with attributify on', () => {
-    expect(names(mpWeixin).transformers.some(n => n.includes('attributify'))).toBe(true)
-    expect(names(h5).transformers.some(n => n.includes('attributify'))).toBe(false)
+    expect(names(mpWeixin, { attributify: true }).transformers.some(n => n.includes('attributify'))).toBe(true)
+    expect(names(h5, { attributify: true }).transformers.some(n => n.includes('attributify'))).toBe(false)
+  })
+
+  it('registers no transformer while attributify keeps its default', () => {
+    expect(names(mpWeixin).transformers).toHaveLength(0)
   })
 
   it('returns empty when attributify disabled, even on mini-program', () => {

@@ -22,12 +22,14 @@ export type { Theme } from '@unocss/preset-mini'
  *   （把属性写法编译成 class，因为小程序 wxss 不支持属性选择器）；
  * - 其它平台（H5、App、快应用等）：直接用 presetWind3（默认）或 presetWind4。
  *
- * 另外还内置了 presetRemRpx、presetAttributify，以及按平台写样式的 variants（`uni-xxx:`）。
+ * 另外还内置了 presetRemRpx（默认开启）、presetAttributify（默认关闭），以及按平台写样式的 variants（`uni-xxx:`）。
+ * attributify 默认关闭：上游作者建议默认写字面 `class`，需要时传 `attributify: true` 开启。
  *
  * 平台在入口探测一次（`detectPlatform()`），然后作为 `PlatformProfile` 值传给各个 builder，
  * 避免每个 builder 都自己去 import env，把平台选择这条最值得测的代码锁死在模块级常量上。
  *
- * @param userOptions 选项，都可以不传；把某一项设成 `false` 就关掉对应预设。
+ * @param userOptions 选项，都可以不传；把某一项设成 `false` 就关掉对应预设，
+ *   `attributify` 需要显式开启才生效。
  * @returns UnoCSS Preset。
  */
 export const presetUni: PresetFactory<object, UserUniPresetOptions> = definePreset((userOptions = {}) => {
@@ -44,6 +46,7 @@ export const presetUni: PresetFactory<object, UserUniPresetOptions> = definePres
     theme,
     configResolved(config) {
       // 自动把小程序 attributify transformer 挂到 UnoCSS 配置上，用户不用自己注册。
+      // attributify 默认关闭，所以默认情况下 `transformers` 是空数组。
       if (!config.transformers) {
         config.transformers = transformers
       }

@@ -15,7 +15,9 @@ export default defineConfig({
     ],
   ],
   presets: [
-    presetUni(),
+    // attributify 从 0.7.0 起默认关闭。playground 显式开启，用来覆盖小程序端
+    // transformerAttributify 的产物（属性 → class 的改写）；默认关闭的行为由单测覆盖。
+    presetUni({ attributify: true }),
     presetIcons({
       scale: 1.2,
       warn: true,

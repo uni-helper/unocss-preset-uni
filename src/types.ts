@@ -23,9 +23,15 @@ export interface UniPresetOptions {
   remRpx: boolean | RemRpxOptions
   /**
    * 开关/配置 presetAttributify
-   * @default true
-   * @default { ignoreAttributes: ['block', 'fixed'] } // 小程序平台
-   * @summary 小程序平台会自动使用 transformerAttributify
+   *
+   * 默认关闭。上游作者建议默认写字面 `class`，把 attributify 当成需要明确约定才用的写法
+   * （<https://github.com/antfu/skills/blob/main/skills/unocss/SKILL.md>、<https://x.com/antfu7/status/2122498642519150947>）；
+   * 开启后小程序端还会多一层构建期改写（属性 → `class`），排查样式问题时多一个环节。
+   * 需要用已有 attributify 代码的项目可以显式打开，或直接传选项。
+   *
+   * @default false
+   * @example true // 小程序端自动忽略 block / fixed 属性
+   * @example { prefixedOnly: true } // 只扫描带前缀的属性
    */
   attributify: boolean | PresetAttributifyOptions
 }
