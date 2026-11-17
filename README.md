@@ -17,7 +17,7 @@
   <a href="https://github.com/kejunmao"><img src="https://img.shields.io/badge/Author%20%26%20Maintainer-KeJun-blue?style=for-the-badge" alt="Author & Maintainer"></a>
 </p>
 
-专为 uni-app 打造的 UnoCSS 预设：按当前编译平台自动选用 wind3/wind4 或 preset-applet，并内置 rem/rpx 换算、attributify 与 `uni-<platform>:` 平台变体。
+专为 uni-app 打造的 UnoCSS 预设：按当前编译平台自动选用 wind3/wind4 或 preset-applet，并内置 rem/rpx 换算、可选的 attributify 支持与 `uni-<platform>:` 平台变体。
 
 不想看文档？直接问 AI 🤖 <a href="https://deepwiki.com/uni-helper/unocss-preset-uni"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki"></a>
 
@@ -39,7 +39,7 @@
 
 - 🥰 适配 uni-app 所有支持平台
 - 🚀 几乎零配置启动
-- ⚡️ 内置 `presetWind3`（默认）/ `presetWind4` 和 `presetAttributify` 支持
+- ⚡️ 内置 `presetWind3`（默认）/ `presetWind4`，attributify 按需开启
 - ⚙️ 随时停用或自定义预设的配置
 - 🦾 按平台编写样式
 
@@ -51,7 +51,8 @@
 
 | unocss | unocss-applet | @uni-helper/unocss-preset-uni | Node.js | 备注 |
 |--------|---------------|-------------------------------|---------|------|
-| ~66.12.0 | ^0.16.1 | ~0.6.0 | >=22.12 | 当前版本；`engines` 声明 `>=22.12`，CI 覆盖 Node.js 22 / 24 / 26 |
+| ~66.13.0 | ^0.16.2 | ~0.7.0 | >=22.12 | 当前版本；attributify 改为默认关闭，破坏性变更见下文 |
+| ~66.12.0 | ^0.16.1 | ~0.6.0 | >=22.12 | `engines` 声明 `>=22.12`，CI 覆盖 Node.js 22 / 24 / 26 |
 | ~66.8.1 | ^0.14.0 | ^0.4.0 | >=22.12 | 起声明 engines；unocss-applet 0.14.0 移除了 `AppletConfig` / `UserAppletConfig` 类型 |
 | ~66.7.5 | ^0.13.8 | ^0.3.0 | 未声明 | unocss 66.x 与 unocss-applet 0.13.x 均未声明 engines，CI 验证于 Node.js 22 |
 | >=0.58 | >=0.7 | ^0.2.8 | >=14 | peer 放宽为开放范围，Node.js 下限随所选 unocss 版本 |
@@ -152,15 +153,17 @@ export default defineConfig({
 
 ### attributify
 
-- 默认值：`true`
+- 默认值：`false`（v0.7.0 起）
 
-是否启用 [@unocss/preset-attributify](https://unocss.dev/presets/attributify)。对于小程序平台，还会自动启用 [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify) 以获取更佳支持。
+是否启用 [@unocss/preset-attributify](https://unocss.dev/presets/attributify)。对于小程序平台，开启后还会自动启用 [@unocss-applet/transformer-attributify](https://github.com/unocss-applet/unocss-applet/tree/main/packages/transformer-attributify)，在构建期把属性写法编译成 `class`。
 
-默认启用，匹配属性。小程序端额外忽略 `block` 和 `fixed`（避免与小程序原生属性冲突），其它平台不忽略任何属性。要禁用，请传递 `false`。
+默认关闭。上游作者建议默认写字面 `class`，把 attributify 当成需要明确约定才用的写法（见 <https://github.com/antfu/skills/blob/main/skills/unocss/SKILL.md> 和 <https://x.com/antfu7/status/2122498642519150947>）；开启后小程序端还会多一层构建期改写，排查样式问题时既要看模板改写结果，也要看生成的 wxss。
 
-除了传递 boolean 值，你也可以传递 @unocss/preset-attributify 的选项，具体选项请查看上方提供的文档链接，此时仍视为开启。
+开启后小程序端会额外忽略 `block` 和 `fixed`（避免与小程序原生属性冲突），其它平台不忽略任何属性。
 
-注意：部分情况下组件库的属性命名可能会与此模式冲突，如果出现样式无效的情况，请尝试关闭此选项，或者设置 `prefixedOnly` 选项值为 `true`，只扫描前缀匹配的属性。
+除了传递 `true`，你也可以传递 @unocss/preset-attributify 的选项。此时仍视为开启，并与平台默认值浅合并，手动传递的键优先）。
+
+注意：部分情况下组件库的属性命名可能会与此模式冲突，如果出现样式无效的情况，请设置 `prefixedOnly` 选项值为 `true`，只扫描前缀匹配的属性。
 
 ```ts
 import { presetUni } from '@uni-helper/unocss-preset-uni'
@@ -412,7 +415,7 @@ function resolveOptions(
 ): ResolvedUniPresetOptions
 ```
 
-把每项 `boolean | T | undefined` 归一化成 `false | T`，并按平台补默认值（小程序端 `attributify.ignoreAttributes = ['block', 'fixed']`；`remRpx.mode` 小程序端不传、其它平台为 `'rpx2rem'`）。传了具体配置时会与默认值浅合并，用户传的键优先。
+把每项 `boolean | T | undefined` 归一化成 `false | T`，并按平台补默认值。`attributify` 默认关闭，只有显式开启时才注入平台默认值（小程序端 `ignoreAttributes = ['block', 'fixed']`）；`remRpx.mode` 小程序端不传、其它平台为 `'rpx2rem'`。传了具体配置时会与默认值浅合并，用户传的键优先。
 
 `profile` 省略时自动探测；显式传入即可在同一个进程里跑两遍不同平台的分支。
 
@@ -464,6 +467,13 @@ const theme: Theme // { platforms: Record<string, string> }
 | `PresetAttributifyOptions` | `presetAttributify` 的选项与 `transformerAttributify` 选项的交集 |
 | `PlatformProfile` | `{ isMp: boolean; platform: BuiltInPlatform \| undefined }` |
 | `Theme` | 复用 `@unocss/preset-mini` 的 `Theme`，额外声明了 `platforms` 字段 |
+
+### 破坏性变更
+
+#### v0.7.0
+
+- `attributify` 默认值从开启改为关闭。依赖属性写法的项目需要显式传 `attributify: true`，否则模板里的 `p="4"`、`container mx-auto` 这类属性不再生成样式。之前明确传 `false` 的项目不受影响。
+- 依赖基线升到 `unocss ~66.13.0` / `unocss-applet ^0.16.2`。`unocss-applet 0.16.2` 把类名别名从 `_a_` 换成按英文名称的别名（如 `/` → `_slash_`、`.` → `_dot_`），升级后需要全量重建模板与 CSS，新旧产物混用会出现类名对不上。
 
 ## 参与贡献
 

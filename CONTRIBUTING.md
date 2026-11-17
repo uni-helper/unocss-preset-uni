@@ -109,7 +109,7 @@ flowchart TD
 | `src/index.ts` | 发布产物的唯一入口，重新导出 `presetUni`、各 builder 与对外类型。 |
 | `src/preset-uni.ts` | 预设主入口。调用 `detectPlatform()` 探测一次平台，把 `PlatformProfile` 向下传递给各 builder，组装 presets/variants/theme，并在 `configResolved` 中自动挂载 transformer。 |
 | `src/platform.ts` | 平台探测。`detectPlatform()` 把 `@uni-helper/uni-env` 的模块级常量（`isMp`、`platform`）归一化为 `PlatformProfile` 值；env 导入只留在此文件，builder 通过入参拿到 profile，便于测试覆盖两端分支。 |
-| `src/options.ts` | 把每项 `boolean \| T \| undefined` 选项归一化为 `false \| T`，按传入的 `PlatformProfile` 注入平台相关默认值（小程序 attributify 忽略 `block`/`fixed`；remRpx 两端 mode 不同）。 |
+| `src/options.ts` | 把每项 `boolean \| T \| undefined` 选项归一化为 `false \| T`，按传入的 `PlatformProfile` 注入平台相关默认值。`attributify` 默认关闭，只有显式开启时才注入 `ignoreAttributes`（小程序端忽略 `block`/`fixed`）；remRpx 两端 mode 不同。 |
 | `src/presets.ts` | 核心分支逻辑：按 `PlatformProfile.isMp` 在 `presetApplet` 与 `presetWind3`/`presetWind4` 间切换，小程序叠加 `presetLegacyCompat`，再按开关加入 `presetRemRpx`、`presetAttributify`。 |
 | `src/transformers.ts` | 构造需自动注册的源码 transformer 列表。仅小程序平台且开启 attributify 时返回 `transformerAttributify`，其它平台返回空数组。 |
 | `src/variants.ts` | `uni-<platform>:` 平台条件变体。构建场景仅命中当前编译平台时剥离 `uni-xxx:` 前缀，不命中平台返回 undefined（无产出）；非构建场景（`UNI_PLATFORM` 未注入）剥离所有平台前缀，使 VSCode 能提供悬浮提示与补全，真实生效与否仍由构建时平台过滤决定。 |

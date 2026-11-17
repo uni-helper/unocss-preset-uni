@@ -40,7 +40,7 @@ CI（`.github/workflows/ci.yml`）在同一组命令上跑 `build` → `build:mp
 | `src/index.ts` | 唯一的发布入口，`export *` 自 `preset-uni.ts` 与 `types.ts`。新增对外导出必须经过这里。 |
 | `src/preset-uni.ts` | `presetUni`（`PresetFactory`）。探测一次平台，依次调 `resolveOptions` / `createPresets` / `createVariants` / `createTransformers`，并在 `configResolved` 里挂 transformer。 |
 | `src/platform.ts` | `detectPlatform()`，把 `@uni-helper/uni-env` 的 `isMp` / `platform` 归一化成 `PlatformProfile` 值。这是全仓唯一 import `@uni-helper/uni-env` 运行时变量的地方。 |
-| `src/options.ts` | `resolveOptions()`，把 `boolean \| T \| undefined` 归一成 `false \| T`，并按平台注入默认值。 |
+| `src/options.ts` | `resolveOptions()`，把 `boolean \| T \| undefined` 归一成 `false \| T`，并按平台注入默认值。`attributify` 默认关闭，只有显式开启时才注入 `ignoreAttributes`。 |
 | `src/presets.ts` | `createPresets()`，按 `profile.isMp` 在 `presetApplet` 与 `presetWind3`/`presetWind4` 之间选，按开关追加 `presetRemRpx`、`presetAttributify`。 |
 | `src/transformers.ts` | `createTransformers()`，仅小程序且 `attributify` 开启时返回 `transformerAttributify`。 |
 | `src/variants.ts` | `createVariants()`，`uni-<platform>:` 变体（`multiPass: true`，支持 `uni-[mp-weixin]:`）。 |
